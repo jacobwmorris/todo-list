@@ -19,9 +19,13 @@ const Project = function(name) {
 
     const get = function(id) {
         return todos[id];
-    }
+    };
 
-    return {name, add, remove, update, get};
+    const todoCount = function() {
+        return todos.length;
+    };
+
+    return {name, add, remove, update, get, todoCount};
 };
 
 export {TodoItem, Project};
