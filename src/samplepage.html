@@ -17,6 +17,25 @@
         </nav>
         <main>
             <h1>Default</h1>
+            <div class="new">
+                <button class="new-button">New Item</button>
+                <form action="#">
+                    <label for="f-title">Title:</label>
+                    <input type="text" name="title" id="f-title">
+                    <label for="f-date">Due Date:</label>
+                    <input type="date" name="date" id="f-date">
+
+                    <label for="f-desc">Description:</label>
+                    <textarea type="text" name="description" id="f-desc" cols="60" rows="8"></textarea>
+                    
+                    <fieldset>
+                        <label for="f-pri-low"><input type="radio" name="priority" id="f-pri-low">Low</label>
+                        <label for="f-pri-med"><input type="radio" name="priority" id="f-pri-med">Medium</label>
+                        <label for="f-pri-high"><input type="radio" name="priority" id="f-pri-high">High</label>
+                    </fieldset>
+                </form>
+                <button type="submit">Add</button>
+            </div>
             <div class="todo">
                 <button class="todo-done">X</button>
                 <div class="todo-titledesc">
