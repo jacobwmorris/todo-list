@@ -15,38 +15,82 @@
                 <li><button>Default</button></li>
             </ul>
         </nav>
-        <main>
+        <header>
             <h1>Default</h1>
-            <div class="new">
-                <button class="new-button">New Item</button>
-                <form action="#">
-                    <label for="f-title">Title:</label>
-                    <input type="text" name="title" id="f-title">
-                    <label for="f-date">Due Date:</label>
-                    <input type="date" name="date" id="f-date">
-
-                    <label for="f-desc">Description:</label>
-                    <textarea type="text" name="description" id="f-desc" cols="60" rows="8"></textarea>
-                    
-                    <fieldset>
-                        <label for="f-pri-low"><input type="radio" name="priority" id="f-pri-low">Low</label>
-                        <label for="f-pri-med"><input type="radio" name="priority" id="f-pri-med">Medium</label>
-                        <label for="f-pri-high"><input type="radio" name="priority" id="f-pri-high">High</label>
-                    </fieldset>
+            <button class="new-button">New Item</button>
+        </header>
+        <main>
+            <div class="form-wrapper">
+                <form action="#" id="new-todo-form">
+                    <div class="f-title-cell">
+                        <label for="f-title">Title:</label>
+                        <input type="text" name="title" id="f-title">
+                    </div>
+            
+                    <div class="f-date-cell">
+                        <label for="f-date">Due Date:</label>
+                        <input type="date" name="date" id="f-date">
+                    </div>
+            
+                    <div class="f-pri-cell">
+                        <fieldset>
+                            <legend>Priority</legend>
+                            <label for="f-pri-low" class="block-label"><input type="radio" name="priority" id="f-pri-low">Low</label>
+                            <label for="f-pri-med" class="block-label"><input type="radio" name="priority" id="f-pri-med">Medium</label>
+                            <label for="f-pri-high" class="block-label"><input type="radio" name="priority" id="f-pri-high">High</label>
+                        </fieldset>
+                    </div>
+                    <div class="f-desc-cell">
+                        <label for="f-desc" class="block-label">Description:</label>
+                        <textarea type="text" name="description" id="f-desc" cols="60" rows="8"></textarea>
+                    </div>
                 </form>
-                <button type="submit">Add</button>
+                <button type="submit" form="new-todo-form">Add</button>
             </div>
-            <div class="todo">
-                <button class="todo-done">X</button>
-                <div class="todo-titledesc">
-                    <h2>Do thing</h2>
-                    <p>stuff</p>
+            <div class="todo-list">
+                <div class="todo">
+                    <button class="todo-done">X</button>
+                    <div class="todo-titledesc">
+                        <h2>Do thing</h2>
+                        <p>stuff that will need to be done to complete the thing in question.</p>
+                    </div>
+                    <p class="todo-date">12-31-2022</p>
+                    <div class="todo-priority">M</div>
+                    <button class="todo-expand">>></button>
                 </div>
-                <p class="todo-date">12-31-2022</p>
-                <div class="todo-priority"></div>
-                <button class="todo-expand">>></button>
+                <div class="todo">
+                    <button class="todo-done">X</button>
+                    <div class="todo-titledesc">
+                        <h2>Do thing</h2>
+                        <p>stuff that will need to be done to complete the thing in question.</p>
+                    </div>
+                    <p class="todo-date">12-31-2022</p>
+                    <div class="todo-priority">M</div>
+                    <button class="todo-expand">>></button>
+                </div>
+                <div class="todo">
+                    <button class="todo-done">X</button>
+                    <div class="todo-titledesc">
+                        <h2>Do thing</h2>
+                        <p>stuff that will need to be done to complete the thing in question.</p>
+                    </div>
+                    <p class="todo-date">12-31-2022</p>
+                    <div class="todo-priority">M</div>
+                    <button class="todo-expand">>></button>
+                </div>
             </div>
         </main>
+        <aside>
+            <div class="expanded">
+                <h2>Do thing</h2>
+                <p>Due date:</p>
+                <p>stuff that will need to be done to complete the thing in question.</p>
+                <div class="expanded-buttons">
+                    <button>Remove From List</button>
+                    <button>Close</button>
+                </div>
+            </div>
+        </aside>
     </div>
 </body>
 </html>
