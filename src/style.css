@@ -7,6 +7,8 @@
 
 :root {
     --color-blue-3: #4141b9;
+    --col-remove: #f00;
+    --col-remove-hover: #b00;
 }
 
 .no-display {
@@ -19,7 +21,7 @@ button {
 }
 
 button:hover {
-    background-color: gray;
+    background-color: var(--col-remove-hover);
 }
 
 /* Main layout */
@@ -43,6 +45,34 @@ main {
 
 aside {
     grid-area: 2 / 3 / 3 / 4;
+}
+
+/* Project list */
+.project {
+    display: flex;
+    height: 40px;
+}
+
+.project-remove, .project-expand {
+    font-weight: bold;
+}
+
+.project-remove {
+    width: 40px;
+    font-size: 20px;
+    color: #fff;
+    background-color: var(--col-remove);
+    flex: none;
+}
+
+.project-expand {
+    padding-left: 10px;
+    font-size: 1.5rem;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1 1 auto;
 }
 
 /* Form */

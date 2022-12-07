@@ -1,15 +1,10 @@
 //import {format} from "date-fns";
 import "./style.css";
 import {TodoItem, Project} from "./todos.js";
+import Display from "./display.js";
 
 /* let d = new Date(2000, 0, 1);
 console.log(format(d, "MM/dd/yyyy")); */
-
-function listProjects(projList) {
-    for (const proj of projList) {
-        console.log(proj.name);
-    }
-}
 
 (function() {
     const projects = [];
@@ -25,12 +20,13 @@ function listProjects(projList) {
     
         if (!name) {
             window.alert("Error: The project must have a name.");
+            event.preventDefault();
             return;
         }
 
         projects.push(Project(name));
         document.querySelector(".form-wrapper.proj-form").classList.add("no-display");
-        listProjects(projects);
+        Display.updateProjectList(projects);
         event.preventDefault();
     };
 
