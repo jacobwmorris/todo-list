@@ -9,11 +9,13 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: "To Do List",
+            template: "./src/samplepage.html"
         }),
     ],
     output: {
         filename: "main.js",
         path: path.resolve(__dirname, "dist"),
+        clean: true,
     },
     module: {
         rules: [

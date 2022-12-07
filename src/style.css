@@ -46,11 +46,7 @@ aside {
 }
 
 /* Form */
-.form-wrapper {
-    padding: 10px;
-}
-
-form {
+#new-todo-form {
     display: grid;
     grid-template-columns: 500px 100px;
     grid-template-rows: 60px 60px 1fr;
@@ -93,18 +89,39 @@ textarea {
     width: 60px;
     font-size: 20px;
     font-weight: bold;
+    flex: none;
+}
+
+.todo-titledesc {
+    overflow: hidden;
+    flex: 1 1 auto;
+}
+
+.todo-titledesc > p {
+    white-space: nowrap;
+    overflow: inherit;
+    text-overflow: ellipsis;
 }
 
 .todo-date {
     padding: 10px;
+    flex: none;
 }
 
 .todo-priority {
     width: 60px;
     font-size: 20px;
     text-align: center;
+    flex: none;
+}
+
+input[type="checkbox"] {
+    margin: 0 15px;
+    width: 30px;
+    flex: none;
 }
 
 .todo-expand {
     margin-left: auto;
+    flex: none;
 }
