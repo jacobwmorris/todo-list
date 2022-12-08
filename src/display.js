@@ -1,8 +1,8 @@
-const Display = (function() {
+const DisplayProjectList = function() {
     const projectList = document.getElementById("project-list");
-    const projectTitle = document.getElementById("project-title");
+    /* const projectTitle = document.getElementById("project-title");
     const todoList = document.getElementById("todo-list");
-    const expanded = document.getElementById("expanded");
+    const expanded = document.getElementById("expanded"); */
 
     const clearChildren = function(element) {
         while (element.children.length) {
@@ -31,7 +31,8 @@ const Display = (function() {
         return item;
     };
 
-    const updateProjectList = function(projects) {
+    const update = function(projects) {
+        console.log("Updated");
         const list = document.createElement("ul");
         for (const project of projects) {
             list.appendChild(makeProjectListItem(project.name));
@@ -40,7 +41,7 @@ const Display = (function() {
         projectList.appendChild(list);
     };
 
-    return {updateProjectList};
-})();
+    return {update};
+};
 
-export default Display;
+export {DisplayProjectList};

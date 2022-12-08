@@ -1,16 +1,23 @@
 //import {format} from "date-fns";
 import "./style.css";
-import {TodoItem, Project} from "./todos.js";
-import Display from "./display.js";
+import {TodoItem, Project, ProjectList} from "./todos.js";
+import {DisplayProjectList} from "./display.js";
 
 /* let d = new Date(2000, 0, 1);
 console.log(format(d, "MM/dd/yyyy")); */
 
 (function() {
-    const projects = [];
+    //Set up displayers
+    const displayProjectList = DisplayProjectList();
+    
+    //Create project list and hook it up to display
+    const projects = ProjectList();
+    projects.registerObserver(displayProjectList);
 
-    projects.push(Project("Default"));
+    //Create a default project
+    projects.add(Project("Default"));
 
+    //Add form callbacks
     const projectFormShowCallback = function(event) {
         document.querySelector(".form-wrapper.proj-form").classList.toggle("no-display");
     };
@@ -24,9 +31,8 @@ console.log(format(d, "MM/dd/yyyy")); */
             return;
         }
 
-        projects.push(Project(name));
+        projects.add(Project(name));
         document.querySelector(".form-wrapper.proj-form").classList.add("no-display");
-        Display.updateProjectList(projects);
         event.preventDefault();
     };
 
