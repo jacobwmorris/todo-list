@@ -22,7 +22,7 @@ const DisplayProjectList = function() {
 
     const makeProjectListItem = function(proj, projects) {
         const item = makeElement("li", "", "project");
-        const remove = makeElement("button", "X", "project-remove");
+        const remove = makeElement("button", "X", "red-button");
         const expand = makeElement("button", proj.name, "project-expand");
 
         remove.addEventListener("click", function(event) {

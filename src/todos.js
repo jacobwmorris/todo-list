@@ -1,5 +1,28 @@
-const TodoItem = function(title, description, dueDate, priority) {
-    return {title, description, dueDate, priority};
+const Subject = function() {
+    const observers = [];
+
+    const registerObserver = function(obs) {
+        observers.push(obs);
+    };
+
+    const removeObserver = function(obs) {
+        const i = observers.findIndex(o => o === obs);
+        if (i >= 0) {
+            observers.splice(i, 1);
+        }
+    };
+
+    const notify = function(object) {
+        for (const o of observers) {
+            o.update(object);
+        }
+    };
+
+    return {registerObserver, removeObserver, notify};
+};
+
+const TodoItem = function(title, description, dueDate, priority, checked) {
+    return {title, description, dueDate, priority, checked};
 };
 
 const Project = function(name) {
@@ -30,25 +53,7 @@ const Project = function(name) {
 };
 
 const ProjectList = function() {
-    //Observer handling functions
-    const observers = [];
-
-    const registerObserver = function(obs) {
-        observers.push(obs);
-    };
-
-    const removeObserver = function(obs) {
-        const i = observers.findIndex((o) => o === obs);
-        if (i >= 0) {
-            observers.splice(i, 1);
-        }
-    };
-
-    const notify = function() {
-        for (const o of observers) {
-            o.update(this);
-        }
-    };
+    const proto = Subject();
     
     //Project list functions
     const projects = [];
@@ -56,7 +61,7 @@ const ProjectList = function() {
 
     const add = function(proj) {
         projects.push(proj);
-        this.notify();
+        proto.notify(this);
     };
 
     const remove = function(proj) {
@@ -64,7 +69,7 @@ const ProjectList = function() {
         if (i >= 0) {
             projects.splice(i, 1);
         }
-        this.notify();
+        proto.notify(this);
     };
 
     const get = function(id) {
@@ -75,7 +80,7 @@ const ProjectList = function() {
         return projects.length;
     };
 
-    return {registerObserver, removeObserver, notify, add, remove, get, projCount};
+    return Object.assign(Object.create(proto), {add, remove, get, projCount});
 };
 
 export {TodoItem, Project, ProjectList};

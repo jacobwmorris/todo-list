@@ -6,7 +6,11 @@
 }
 
 :root {
-    --color-blue-3: #4141b9;
+    --col-blue-1: #7676b8;
+    --col-blue-2: #6363c0;
+    --col-blue-3: #4141b9;
+    --col-gray: #aaa;
+    --col-orange: #ff6f28;
     --col-remove: #f00;
     --col-remove-hover: #b00;
 }
@@ -17,10 +21,20 @@
 
 button {
     border: none;
-    background-color: transparent;
+    background-color: var(--col-blue-1);
 }
 
 button:hover {
+    background-color: var(--col-blue-2);
+}
+
+.red-button {
+    font-weight: bold;
+    color: #fff;
+    background-color: var(--col-remove);
+}
+
+.red-button:hover {
     background-color: var(--col-remove-hover);
 }
 
@@ -53,15 +67,13 @@ aside {
     height: 40px;
 }
 
-.project-remove, .project-expand {
+.project-expand {
     font-weight: bold;
 }
 
-.project-remove {
+.project > button.red-button {
     width: 40px;
     font-size: 20px;
-    color: #fff;
-    background-color: var(--col-remove);
     flex: none;
 }
 
@@ -111,18 +123,27 @@ textarea {
 
 /* Todo items */
 .todo {
+    border: 1px solid var(--col-blue-3);
+    border-radius: 6px;
+    margin: 10px 0;
     height: 60px;
     display: flex;
+    align-items: stretch;
 }
+
+.pri-low {background-color: var(--col-blue-2);}
+.pri-med {background-color: var(--col-blue-1);}
+.pri-hi {background-color: var(--col-orange);}
+.checked {background-color: var(--col-gray);}
 
 .todo > button {
     width: 60px;
     font-size: 20px;
-    font-weight: bold;
     flex: none;
 }
 
 .todo-titledesc {
+    padding: 0 10px;
     overflow: hidden;
     flex: 1 1 auto;
 }
@@ -152,6 +173,11 @@ input[type="checkbox"] {
 }
 
 .todo-expand {
+    border-left: 2px solid var(--col-blue-3);
     margin-left: auto;
     flex: none;
+}
+
+.todo > *:not(.todo-expand) {
+    border-right: 2px solid var(--col-blue-3);
 }

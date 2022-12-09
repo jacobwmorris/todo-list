@@ -23,15 +23,16 @@ console.log(format(d, "MM/dd/yyyy")); */
     };
 
     const addProjectCallback = function(event) {
-        const name = document.getElementById("f-proj-name").value;
+        const nameInput = document.getElementById("f-proj-name");
     
-        if (!name) {
+        if (!nameInput.value) {
             window.alert("Error: The project must have a name.");
             event.preventDefault();
             return;
         }
 
-        projects.add(Project(name));
+        projects.add(Project(nameInput.value));
+        nameInput.value = "";
         document.querySelector(".form-wrapper.proj-form").classList.add("no-display");
         event.preventDefault();
     };

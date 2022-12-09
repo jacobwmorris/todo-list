@@ -20,7 +20,7 @@
             </div>
             <div id="project-list">
                 <ul>
-                    <li class="project"><button class="project-remove">X</button><button class="project-expand">Default</button></li>
+                    <li class="project"><button class="remove-button">X</button><button class="project-expand">Default</button></li>
                 </ul>
             </div>
         </nav>
@@ -59,8 +59,19 @@
                 <button type="submit" form="new-todo-form" id="add-todo-button">Add</button>
             </div>
             <div id="todo-list">
-                <div class="todo">
-                    <button class="todo-remove">X</button>
+                <div class="todo pri-low">
+                    <button class="red-button">X</button>
+                    <div class="todo-titledesc">
+                        <h2>Do thing</h2>
+                        <p>stuff that will need to be done to complete the thing in question.</p>
+                    </div>
+                    <p class="todo-date">12-31-2022</p>
+                    <div class="todo-priority">L</div>
+                    <input class="todo-done" type="checkbox">
+                    <button class="todo-expand">>></button>
+                </div>
+                <div class="todo pri-med">
+                    <button class="red-button">X</button>
                     <div class="todo-titledesc">
                         <h2>Do thing</h2>
                         <p>stuff that will need to be done to complete the thing in question.</p>
@@ -70,24 +81,26 @@
                     <input class="todo-done" type="checkbox">
                     <button class="todo-expand">>></button>
                 </div>
-                <div class="todo">
-                    <button class="todo-done">X</button>
+                <div class="todo pri-hi">
+                    <button class="red-button">X</button>
                     <div class="todo-titledesc">
                         <h2>Do thing</h2>
                         <p>stuff that will need to be done to complete the thing in question.</p>
                     </div>
                     <p class="todo-date">12-31-2022</p>
-                    <div class="todo-priority">M</div>
+                    <div class="todo-priority">H</div>
+                    <input class="todo-done" type="checkbox">
                     <button class="todo-expand">>></button>
                 </div>
-                <div class="todo">
-                    <button class="todo-done">X</button>
+                <div class="todo checked">
+                    <button class="red-button">X</button>
                     <div class="todo-titledesc">
                         <h2>Do thing</h2>
                         <p>stuff that will need to be done to complete the thing in question.</p>
                     </div>
                     <p class="todo-date">12-31-2022</p>
-                    <div class="todo-priority">M</div>
+                    <div class="todo-priority">H</div>
+                    <input class="todo-done" type="checkbox">
                     <button class="todo-expand">>></button>
                 </div>
             </div>
