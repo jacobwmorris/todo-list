@@ -39,16 +39,14 @@ const ProjectList = function() {
 
     const removeObserver = function(obs) {
         const i = observers.findIndex((o) => o === obs);
-        if (i) {
+        if (i >= 0) {
             observers.splice(i, 1);
         }
     };
 
     const notify = function() {
-        console.log("Notified");
         for (const o of observers) {
-            console.log(o);
-            o.update(projects);
+            o.update(this);
         }
     };
     
@@ -58,24 +56,26 @@ const ProjectList = function() {
 
     const add = function(proj) {
         projects.push(proj);
-        console.log("Project added");
-        notify();
+        this.notify();
     };
 
-    const remove = function(id) {
-        projects.splice(id, 1);
-        notify();
+    const remove = function(proj) {
+        const i = projects.findIndex(p => p === proj);
+        if (i >= 0) {
+            projects.splice(i, 1);
+        }
+        this.notify();
     };
 
     const get = function(id) {
         return projects[id];
     };
 
-    const todoCount = function() {
+    const projCount = function() {
         return projects.length;
     };
 
-    return {registerObserver, removeObserver, notify, add, remove, get, todoCount};
+    return {registerObserver, removeObserver, notify, add, remove, get, projCount};
 };
 
 export {TodoItem, Project, ProjectList};

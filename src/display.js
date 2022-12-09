@@ -20,22 +20,25 @@ const DisplayProjectList = function() {
         return e;
     };
 
-    const makeProjectListItem = function(name, projNum) {
+    const makeProjectListItem = function(proj, projects) {
         const item = makeElement("li", "", "project");
         const remove = makeElement("button", "X", "project-remove");
-        remove.setAttribute("data-projnum", projNum);
-        const expand = makeElement("button", name, "project-expand");
-        //Add event listeners here
+        const expand = makeElement("button", proj.name, "project-expand");
+
+        remove.addEventListener("click", function(event) {
+            projects.remove(proj);
+        });
+
         item.appendChild(remove);
         item.appendChild(expand);
         return item;
     };
 
     const update = function(projects) {
-        console.log("Updated");
         const list = document.createElement("ul");
-        for (const project of projects) {
-            list.appendChild(makeProjectListItem(project.name));
+        for (let i = 0; i < projects.projCount(); i++) {
+            const proj = projects.get(i);
+            list.appendChild(makeProjectListItem(proj, projects));
         }
         clearChildren(projectList);
         projectList.appendChild(list);
