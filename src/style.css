@@ -131,9 +131,9 @@ textarea {
     align-items: stretch;
 }
 
-.pri-low {background-color: var(--col-blue-2);}
-.pri-med {background-color: var(--col-blue-1);}
-.pri-hi {background-color: var(--col-orange);}
+.todo[data-priority="L"] {background-color: var(--col-blue-2);}
+.todo[data-priority="M"] {background-color: var(--col-blue-1);}
+.todo[data-priority="H"] {background-color: var(--col-orange);}
 .checked {background-color: var(--col-gray);}
 
 .todo > button {
@@ -160,6 +160,7 @@ textarea {
 }
 
 .todo-priority {
+    padding: 15px;
     width: 60px;
     font-size: 20px;
     text-align: center;
