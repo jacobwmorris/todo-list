@@ -10,13 +10,13 @@
     <div id="content">
         <nav>
             <h1>Projects</h1>
-            <button class="new-button" id="project-form-button">New Project</button>
+            <button class="regular-button" id="project-form-button">New Project</button>
             <div class="form-wrapper proj-form no-display">
                 <form action="#" id="new-project-form">
                     <label for="f-proj-name">Title:</label>
                     <input type="text" name="proj-name" id="f-proj-name">
                 </form>
-                <button type="submit" form="new-project-form" id="add-project-button">Add</button>
+                <button type="submit" form="new-project-form" id="add-project-button" class="regular-button">Add</button>
             </div>
             <div id="project-list">
                 <ul>
@@ -28,7 +28,7 @@
             <div id="project-title">
                 <h1>Default</h1>
             </div>
-            <button class="new-button" id="todo-form-button">New Item</button>
+            <button class="regular-button" id="todo-form-button">New Item</button>
         </header>
         <main>
             <div class="form-wrapper todo-form no-display">
@@ -56,7 +56,7 @@
                         <textarea name="description" id="f-desc" cols="60" rows="8"></textarea>
                     </div>
                 </form>
-                <button type="button" form="new-todo-form" id="add-todo-button">Add</button>
+                <button type="button" form="new-todo-form" id="add-todo-button" class="regular-button">Add</button>
             </div>
             <div id="todo-list">
                 <div class="todo" data-priority="L">
@@ -110,7 +110,7 @@
                 <h1>Click the arrows on a todo item to edit it.</h1>
                 <form action="#" id="edit-form">
                     <input type="text" name="edit-title" id="edit-title">
-                    <div class="edit-buttonbox">
+                    <div class="edit-buttonbox edit-tallerbox">
                         <input type="date" name="edit-date" id="edit-date">
                         <fieldset>
                             <legend>Priority</legend>
@@ -119,13 +119,13 @@
                             <label for="edit-pri-hi" class="block-label"><input type="radio" name="edit-pri" value="H" id="edit-pri-hi">High</label>
                         </fieldset>
                     </div>
-                    <textarea name="edit-desc" id="edit-desc"></textarea>
+                    <textarea name="edit-desc" id="edit-desc" rows="10"></textarea>
                     <div class="edit-buttonbox">
                         <button>&lt&lt</button>
-                        <input type="checkbox">
+                        <input type="checkbox" id="edit-done">
                         <button class="red-button">X</button>
                     </div>
-                    <button>Update</button>
+                    <button type="submit" class="regular-button">Update</button>
                 </form>
             </div>
         </aside>
