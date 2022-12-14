@@ -79,6 +79,11 @@ import {DisplayProjectList, DisplayTodoList, DisplayTodo} from "./display.js";
             projects.getExpanded().add(newTodo);
         };
         
+        titleIn.value = "";
+        dateIn.value = "";
+        descIn.value = "";
+        radioButtons[1].checked = true;
+        document.querySelector(".form-wrapper.todo-form").classList.add("no-display");
         event.preventDefault();
     };
 
