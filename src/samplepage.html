@@ -31,7 +31,7 @@
             <button class="new-button" id="todo-form-button">New Item</button>
         </header>
         <main>
-            <div class="form-wrapper todo-form">
+            <div class="form-wrapper todo-form no-display">
                 <form action="#" id="new-todo-form">
                     <div class="f-title-cell">
                         <label for="f-title">Title:</label>
@@ -46,9 +46,9 @@
                     <div class="f-pri-cell">
                         <fieldset>
                             <legend>Priority</legend>
-                            <label for="f-pri-low" class="block-label"><input type="radio" name="priority" id="f-pri-low">Low</label>
-                            <label for="f-pri-med" class="block-label"><input type="radio" name="priority" id="f-pri-med">Medium</label>
-                            <label for="f-pri-high" class="block-label"><input type="radio" name="priority" id="f-pri-high">High</label>
+                            <label for="f-pri-low" class="block-label"><input type="radio" name="priority" value="L" id="f-pri-low">Low</label>
+                            <label for="f-pri-med" class="block-label"><input type="radio" name="priority" value="M" id="f-pri-med" checked>Medium</label>
+                            <label for="f-pri-high" class="block-label"><input type="radio" name="priority" value="H" id="f-pri-high">High</label>
                         </fieldset>
                     </div>
                     <div class="f-desc-cell">
@@ -56,7 +56,7 @@
                         <textarea type="text" name="description" id="f-desc" cols="60" rows="8"></textarea>
                     </div>
                 </form>
-                <button type="submit" form="new-todo-form" id="add-todo-button">Add</button>
+                <button type="button" form="new-todo-form" id="add-todo-button">Add</button>
             </div>
             <div id="todo-list">
                 <div class="todo" data-priority="L">

@@ -22,11 +22,7 @@ const DomFuncs = (function() {
 
 const DisplayProjectList = function() {
     const projectList = document.getElementById("project-list");
-    /* const projectTitle = document.getElementById("project-title");
-    const todoList = document.getElementById("todo-list");
-    const expanded = document.getElementById("expanded"); */
-
-    
+    //const projectTitle = document.getElementById("project-title");
 
     const makeProjectListItem = function(proj, projects) {
         const item = DomFuncs.makeElement("li", "", "project");
@@ -34,7 +30,13 @@ const DisplayProjectList = function() {
         const expand = DomFuncs.makeElement("button", proj.name, "project-expand");
 
         remove.addEventListener("click", function(event) {
+            if (proj === projects.getExpanded()) {
+                projects.unexpand();
+            }
             projects.remove(proj);
+        });
+        expand.addEventListener("click", function(event) {
+            projects.expand(proj);
         });
 
         item.appendChild(remove);
@@ -43,19 +45,23 @@ const DisplayProjectList = function() {
     };
 
     const update = function(projectListData) {
+        DomFuncs.clearChildren(projectList);
+
         const list = document.createElement("ul");
         for (let i = 0; i < projectListData.projCount(); i++) {
             const proj = projectListData.get(i);
             list.appendChild(makeProjectListItem(proj, projectListData));
         }
-        DomFuncs.clearChildren(projectList);
+
+        //const titleText = (projectListData.getExpanded()) ? projectListData.getExpanded().name : "No project selected";
         projectList.appendChild(list);
+        //projectTitle.appendChild(DomFuncs.makeElement("h1", titleText));
     };
 
     return {update};
 };
 
-const DisplayTodo = function() {//Do we construct this with a todo object?
+const DisplayTodo = function() {
     const todo = DomFuncs.makeElement("div", "", "todo");
 
     const makeTitleDesc = function(title, desc) {
@@ -65,6 +71,29 @@ const DisplayTodo = function() {//Do we construct this with a todo object?
         return titleDesc;
     };
 
+    const makeRemoveButton = function(todoData) {
+        const button = DomFuncs.makeElement("button", "X", "red-button");
+
+        button.addEventListener("click", function(event) {
+            todoData.removeSelf();
+        });
+        return button;
+    };
+
+    const makeCheckbox = function(todoData) {
+        const box = DomFuncs.makeElement("input", "", "todo-done");
+        box.setAttribute("type", "checkbox");
+        box.checked = todoData.checked;
+
+        box.addEventListener("change", function(event) {
+            /* console.log(todoData);
+            todoData.checked = !todoData.checked;
+            update(todoData); */
+            todoData.updateProperty("checked", !todoData.checked);
+        });
+        return box;
+    }
+
     const update = function(todoData) {
         todo.setAttribute("data-priority", todoData.priority);
 
@@ -73,17 +102,16 @@ const DisplayTodo = function() {//Do we construct this with a todo object?
         else
             todo.classList.remove("checked");
         
-        //Separate these into functions that apply callbacks
-        const removeButton = DomFuncs.makeElement("button", "X", "red-button");
+        const removeButton = makeRemoveButton(todoData);
+        //Separate this into a function
         const expandButton = DomFuncs.makeElement("button", ">>", "todo-expand");
-
-        //Need function to create checkbox
 
         DomFuncs.clearChildren(todo);
         todo.appendChild(removeButton);
         todo.appendChild(makeTitleDesc(todoData.title, todoData.description));
         todo.appendChild(DomFuncs.makeElement("p", format(todoData.dueDate, "MM-dd-yyyy"), "todo-date"));
         todo.appendChild(DomFuncs.makeElement("div", todoData.priority, "todo-priority"));
+        todo.appendChild(makeCheckbox(todoData));
         todo.appendChild(expandButton);
     };
 
@@ -94,14 +122,25 @@ const DisplayTodo = function() {//Do we construct this with a todo object?
 
 const DisplayTodoList = function() {
     const todoList = document.getElementById("todo-list");
-    const todoItems = [];
+    const projTitle = document.getElementById("project-title");
+    //const todoItems = [];
 
     const update = function(projectData) {
+        //Project title
+        DomFuncs.clearChildren(projTitle);
+        const titleText = (projectData) ? projectData.name : "No project selected";
+        projTitle.appendChild(DomFuncs.makeElement("h1", titleText));
+
+        //List items
         DomFuncs.clearChildren(todoList);
+
+        if (!projectData)
+            return;
 
         for (let i = 0; i < projectData.todoCount(); i++) {
             const item = projectData.get(i);
             const itemDisplay = DisplayTodo();
+            item.registerObserver(itemDisplay);
             itemDisplay.update(item);
             todoList.appendChild(itemDisplay.getElement());
             //todoItems.push(itemDisplay);

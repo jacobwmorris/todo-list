@@ -134,7 +134,7 @@ textarea {
 .todo[data-priority="L"] {background-color: var(--col-blue-2);}
 .todo[data-priority="M"] {background-color: var(--col-blue-1);}
 .todo[data-priority="H"] {background-color: var(--col-orange);}
-.checked {background-color: var(--col-gray);}
+.todo.checked {background-color: var(--col-gray);}
 
 .todo > button {
     width: 60px;
