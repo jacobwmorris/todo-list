@@ -29,12 +29,21 @@ const TodoItem = function(title, description, dueDate, priority, checked, list) 
         proto.notify(this);
     };
 
+    const updateAll = function(title, description, dueDate, priority, checked) {
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.checked = checked;
+        proto.notify(this);
+    };
+
     const removeSelf = function() {
         if (list)
             list.remove(this);
     };
 
-    return Object.assign(Object.create(proto), {title, description, dueDate, priority, checked, updateProperty, removeSelf});
+    return Object.assign(Object.create(proto), {title, description, dueDate, priority, checked, updateProperty, updateAll, removeSelf});
 };
 
 const Project = function(name) {

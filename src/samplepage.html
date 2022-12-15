@@ -108,7 +108,7 @@
         <aside>
             <div id="expanded">
                 <h1>Click the arrows on a todo item to edit it.</h1>
-                <form action="#" id="edit-form">
+                <form action="#" id="edit-form" class="no-display">
                     <input type="text" name="edit-title" id="edit-title">
                     <div class="edit-buttonbox edit-tallerbox">
                         <input type="date" name="edit-date" id="edit-date">
@@ -121,11 +121,11 @@
                     </div>
                     <textarea name="edit-desc" id="edit-desc" rows="10"></textarea>
                     <div class="edit-buttonbox">
-                        <button>&lt&lt</button>
+                        <button type="button" id="edit-unexpand">&lt&lt</button>
                         <input type="checkbox" id="edit-done">
-                        <button class="red-button">X</button>
+                        <button type="button" class="red-button" id="edit-remove">X</button>
                     </div>
-                    <button type="submit" class="regular-button">Update</button>
+                    <button type="submit" class="regular-button" id="edit-update">Update</button>
                 </form>
             </div>
         </aside>

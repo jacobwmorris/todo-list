@@ -19,17 +19,6 @@ import {DisplayProjectList, DisplayTodoList, DisplayTodo} from "./display.js";
     newProjectWithDisplay("Default");
     projects.expand(projects.get(0));
 
-    function newTodoWithDisplay(title, description, dueDate, priority) {
-        const newTodo = TodoItem(title, description, dueDate, priority, false, projects.getExpanded());
-        const displayTodo = DisplayTodo();
-    }
-
-    //Create a default project, and some default todos to test
-    /* defaultProj.add(TodoItem("Test 1", "eiojckzlxnvapezmkcvpoiewalkaknmvklzxciovnrjanlkxcve", new Date(2000, 0, 1), "L", false, defaultProj));
-    defaultProj.add(TodoItem("Test 2", "fiuocmizliumcoqkkjziscjoqc,jnvhruiozkjxhgiopamcjkzoiiii", new Date(2, 1, 2000), "M", false, defaultProj));
-    defaultProj.add(TodoItem("Test 3", "acjmbioqoiejilkxio", new Date(3, 2, 2000), "H", false, defaultProj));
-    defaultProj.add(TodoItem("Test 4", "lzicuhjkiqumcnjvkjbuyaoiq", new Date(4, 3, 2000), "L", true, defaultProj)); */
-
     //Add form callbacks
     const projectFormShowCallback = function(event) {
         document.querySelector(".form-wrapper.proj-form").classList.toggle("no-display");
@@ -75,7 +64,6 @@ import {DisplayProjectList, DisplayTodoList, DisplayTodo} from "./display.js";
 
         if (projects.getExpanded()) {
             const newTodo = TodoItem(titleIn.value, descIn.value, date, priority, false, projects.getExpanded()); //check expanded project
-            console.log(newTodo);
             projects.getExpanded().add(newTodo);
         };
         
