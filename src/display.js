@@ -12,7 +12,14 @@ const DomFuncs = (function() {
         const e = document.createElement(type);
         e.textContent = text;
         if (clas) {
-            e.classList.add(clas);
+            if (Array.isArray(clas)) {
+                for (const c of clas) {
+                    e.classList.add(c);
+                }
+            }
+            else {
+                e.classList.add(clas);
+            }
         }
 
         return e;
@@ -25,7 +32,7 @@ const DisplayProjectList = function() {
     const projectList = document.getElementById("project-list");
 
     const makeProjectListItem = function(proj, projects) {
-        const item = DomFuncs.makeElement("li", "", "project");
+        const item = DomFuncs.makeElement("li", "", ["project", "list-item"]);
         const remove = DomFuncs.makeElement("button", "X", "red-button");
         const expand = DomFuncs.makeElement("button", proj.name, "project-expand");
 
@@ -61,7 +68,7 @@ const DisplayProjectList = function() {
 };
 
 const DisplayTodo = function() {
-    const todo = DomFuncs.makeElement("div", "", "todo");
+    const todo = DomFuncs.makeElement("div", "", ["todo", "list-item"]);
 
     const makeTitleDesc = function(title, desc) {
         const titleDesc = DomFuncs.makeElement("div", "", "todo-titledesc");
