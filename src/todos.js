@@ -1,3 +1,5 @@
+import {format} from "date-fns";
+
 const Subject = function() {
     const observers = [];
 
@@ -43,7 +45,19 @@ const TodoItem = function(title, description, dueDate, priority, checked, list) 
             list.remove(this);
     };
 
-    return Object.assign(Object.create(proto), {title, description, dueDate, priority, checked, updateProperty, updateAll, removeSelf});
+    const extractData = function() {
+        const dataObj = {
+            title: this.title,
+            desc: this.description,
+            due: format(this.dueDate, "yyyy-MM-dd"),
+            prior: this.priority,
+            check: this.checked
+        };
+        return dataObj;
+    };
+
+    return Object.assign(Object.create(proto),
+        {title, description, dueDate, priority, checked, updateProperty, updateAll, removeSelf, extractData});
 };
 
 const Project = function(name) {
@@ -84,7 +98,21 @@ const Project = function(name) {
         return todos.length;
     };
 
-    return Object.assign(Object.create(proto), {name, expandedTodo, add, remove, show, updateItem, get, todoCount});
+    const extractData = function() {
+        const dataObj = {
+            name: name,
+            todos: []
+        };
+
+        for (const t of todos) {
+            dataObj.todos.push(t.extractData());
+        }
+
+        return dataObj;
+    };
+
+    return Object.assign(Object.create(proto),
+        {name, expandedTodo, add, remove, show, updateItem, get, todoCount, extractData});
 };
 
 const ProjectList = function() {
@@ -133,7 +161,20 @@ const ProjectList = function() {
         return projects.length;
     };
 
-    return Object.assign(Object.create(proto), {add, remove, expand, unexpand, getExpanded, get, projCount});
+    const extractData = function() {
+        const dataObj = {
+            projs: []
+        };
+
+        for (const p of projects) {
+            dataObj.projs.push(p.extractData());
+        }
+
+        return dataObj;
+    };
+
+    return Object.assign(Object.create(proto),
+        {add, remove, expand, unexpand, getExpanded, get, projCount, extractData});
 };
 
 export {TodoItem, Project, ProjectList};

@@ -2,8 +2,24 @@ import "./style.css";
 import {parseISO} from "date-fns";
 import {TodoItem, Project, ProjectList} from "./todos.js";
 import {DisplayProjectList, DisplayTodoList, DisplayTodo} from "./display.js";
+import TodoStorage from "./todostorage.js";
+
+function testLocalStorage() {
+    //test local storage
+    //1. try to get data.
+    //2. if it's not there, do nothing (it will be added whenever projects or todos are updated)
+    //Project list should be saved when: a new project is added or deleted, a new todo is added or deleted, a todo is edited
+    const test = {prop1: "asdf", prop2: "qwert"};
+    TodoStorage.registerProjects(test);
+    TodoStorage.storeProjects();
+    console.log(window.localStorage);
+    
+    //const test2 = 
+    return;
+}
 
 (function() {
+    //testLocalStorage();
     //Create project list and hook it up to display
     const projects = ProjectList();
     const displayProjectList = DisplayProjectList();
@@ -18,6 +34,10 @@ import {DisplayProjectList, DisplayTodoList, DisplayTodo} from "./display.js";
     }
     newProjectWithDisplay("Default");
     projects.expand(projects.get(0));
+
+    //Set up project list to be saved on change
+    TodoStorage.registerProjects(projects);
+    TodoStorage.storeProjects();
 
     //Add form callbacks
     const projectFormShowCallback = function(event) {
@@ -40,6 +60,7 @@ import {DisplayProjectList, DisplayTodoList, DisplayTodo} from "./display.js";
         newProjectWithDisplay(nameInput.value);
         nameInput.value = "";
         document.querySelector(".form-wrapper.proj-form").classList.add("no-display");
+        TodoStorage.storeProjects();
         event.preventDefault();
     };
 
@@ -72,6 +93,7 @@ import {DisplayProjectList, DisplayTodoList, DisplayTodo} from "./display.js";
         descIn.value = "";
         radioButtons[1].checked = true;
         document.querySelector(".form-wrapper.todo-form").classList.add("no-display");
+        TodoStorage.storeProjects();
         event.preventDefault();
     };
 

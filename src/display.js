@@ -1,5 +1,7 @@
 import {format} from "date-fns";
 import TodoEditor from "./editor.js";
+import TodoStorage from "./todostorage.js";
+//import TodoStorage from "./todostorage.js";
 
 const DomFuncs = (function() {
     const clearChildren = function(element) {
@@ -41,6 +43,7 @@ const DisplayProjectList = function() {
                 projects.unexpand();
             }
             projects.remove(proj);
+            TodoStorage.storeProjects();
         });
         expand.addEventListener("click", function(event) {
             TodoEditor.unexpand();
@@ -82,6 +85,12 @@ const DisplayTodo = function() {
 
         button.addEventListener("click", function(event) {
             todoData.removeSelf();
+
+            if (todoData === TodoEditor.getEdited()) {
+                TodoEditor.unexpand();
+            }
+
+            TodoStorage.storeProjects();
         });
         return button;
     };
@@ -92,11 +101,9 @@ const DisplayTodo = function() {
         box.checked = todoData.checked;
 
         box.addEventListener("change", function(event) {
-            /* console.log(todoData);
-            todoData.checked = !todoData.checked;
-            update(todoData); */
             todoData.updateProperty("checked", !todoData.checked);
             TodoEditor.setChecked(todoData.checked);
+            TodoStorage.storeProjects();
         });
         return box;
     }

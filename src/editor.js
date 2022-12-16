@@ -1,4 +1,5 @@
 import {parseISO, format} from "date-fns";
+import TodoStorage from "./todostorage";
 
 const TodoEditor = (function() {
     const editArea = document.getElementById("edit-form");
@@ -42,6 +43,7 @@ const TodoEditor = (function() {
         const checked = checkedIn.checked;
 
         editedTodo.updateAll(title, desc, date, priority, checked);
+        TodoStorage.storeProjects();
         event.preventDefault();
     }
 
@@ -50,6 +52,7 @@ const TodoEditor = (function() {
             return;
         }
         editedTodo.updateProperty("checked", checkedIn.checked);
+        TodoStorage.storeProjects();
     }
 
     function removeCallback(event) {
@@ -57,6 +60,7 @@ const TodoEditor = (function() {
             return;
         }
         editedTodo.removeSelf();
+        TodoStorage.storeProjects();
         editArea.classList.add("no-display");
     }
 
@@ -86,9 +90,11 @@ const TodoEditor = (function() {
         checkedIn.checked = checked;
     };
 
-    
+    const getEdited = function() {
+        return editedTodo;
+    }
 
-    return {unexpand, edit, setChecked};
+    return {unexpand, edit, setChecked, getEdited};
 })();
 
 export default TodoEditor;
