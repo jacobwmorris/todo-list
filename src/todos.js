@@ -86,9 +86,9 @@ const Project = function(name) {
             proto.notify(this);
     }
 
-    const updateItem = function(id, item) {
+    /* const updateItem = function(id, item) {
         todos[id] = item;
-    };
+    }; */
 
     const get = function(id) {
         return todos[id];
@@ -112,7 +112,7 @@ const Project = function(name) {
     };
 
     return Object.assign(Object.create(proto),
-        {name, expandedTodo, add, remove, show, updateItem, get, todoCount, extractData});
+        {name, expandedTodo, add, remove, show, /* updateItem, */ get, todoCount, extractData});
 };
 
 const ProjectList = function() {
@@ -173,8 +173,14 @@ const ProjectList = function() {
         return dataObj;
     };
 
+    const reset = function() {
+        projects.splice(0, projects.length);
+        expandedProj = null;
+        proto.notify(this);
+    }
+
     return Object.assign(Object.create(proto),
-        {add, remove, expand, unexpand, getExpanded, get, projCount, extractData});
+        {add, remove, expand, unexpand, getExpanded, get, projCount, extractData, reset});
 };
 
 export {TodoItem, Project, ProjectList};

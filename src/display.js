@@ -1,7 +1,6 @@
 import {format} from "date-fns";
 import TodoEditor from "./editor.js";
 import TodoStorage from "./todostorage.js";
-//import TodoStorage from "./todostorage.js";
 
 const DomFuncs = (function() {
     const clearChildren = function(element) {
@@ -29,46 +28,6 @@ const DomFuncs = (function() {
 
     return {clearChildren, makeElement};
 })();
-
-const DisplayProjectList = function() {
-    const projectList = document.getElementById("project-list");
-
-    const makeProjectListItem = function(proj, projects) {
-        const item = DomFuncs.makeElement("li", "", ["project", "list-item"]);
-        const remove = DomFuncs.makeElement("button", "X", "red-button");
-        const expand = DomFuncs.makeElement("button", proj.name, "project-expand");
-
-        remove.addEventListener("click", function(event) {
-            if (proj === projects.getExpanded()) {
-                projects.unexpand();
-            }
-            projects.remove(proj);
-            TodoStorage.storeProjects();
-        });
-        expand.addEventListener("click", function(event) {
-            TodoEditor.unexpand();
-            projects.expand(proj);
-        });
-
-        item.appendChild(remove);
-        item.appendChild(expand);
-        return item;
-    };
-
-    const update = function(projectListData) {
-        DomFuncs.clearChildren(projectList);
-
-        const list = document.createElement("ul");
-        for (let i = 0; i < projectListData.projCount(); i++) {
-            const proj = projectListData.get(i);
-            list.appendChild(makeProjectListItem(proj, projectListData));
-        }
-
-        projectList.appendChild(list);
-    };
-
-    return {update};
-};
 
 const DisplayTodo = function() {
     const todo = DomFuncs.makeElement("div", "", ["todo", "list-item"]);
@@ -143,7 +102,7 @@ const DisplayTodo = function() {
     return {update, getElement};
 };
 
-const DisplayTodoList = function() {
+const DisplayTodoList = (function() {
     const todoList = document.getElementById("todo-list");
     const projTitle = document.getElementById("project-title");
 
@@ -169,6 +128,47 @@ const DisplayTodoList = function() {
     };
 
     return {update};
-};
+})();
 
-export {DisplayProjectList, DisplayTodo, DisplayTodoList};
+const DisplayProjectList = (function() {
+    const projectList = document.getElementById("project-list");
+
+    const makeProjectListItem = function(proj, projects) {
+        const item = DomFuncs.makeElement("li", "", ["project", "list-item"]);
+        const remove = DomFuncs.makeElement("button", "X", "red-button");
+        const expand = DomFuncs.makeElement("button", proj.name, "project-expand");
+
+        remove.addEventListener("click", function(event) {
+            if (proj === projects.getExpanded()) {
+                TodoEditor.unexpand();
+                projects.unexpand();
+            }
+            projects.remove(proj);
+            TodoStorage.storeProjects();
+        });
+        expand.addEventListener("click", function(event) {
+            TodoEditor.unexpand();
+            projects.expand(proj);
+        });
+
+        item.appendChild(remove);
+        item.appendChild(expand);
+        return item;
+    };
+
+    const update = function(projectListData) {
+        DomFuncs.clearChildren(projectList);
+
+        const list = document.createElement("ul");
+        for (let i = 0; i < projectListData.projCount(); i++) {
+            const proj = projectListData.get(i);
+            list.appendChild(makeProjectListItem(proj, projectListData));
+        }
+
+        projectList.appendChild(list);
+    };
+
+    return {update};
+})();
+
+export {DisplayTodo, DisplayTodoList, DisplayProjectList};

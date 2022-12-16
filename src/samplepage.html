@@ -16,12 +16,12 @@
                     <label for="f-proj-name">Title:</label>
                     <input type="text" name="proj-name" id="f-proj-name">
                 </form>
-                <button type="submit" form="new-project-form" id="add-project-button" class="regular-button">Add</button>
+                <button type="button" form="new-project-form" id="add-project-button" class="regular-button">Add</button>
             </div>
             <div id="project-list">
-                <ul>
+<!--                 <ul>
                     <li class="project"><button class="remove-button">X</button><button class="project-expand">Default</button></li>
-                </ul>
+                </ul> -->
             </div>
         </nav>
         <header>
@@ -29,6 +29,7 @@
                 <h1>Default</h1>
             </div>
             <button class="regular-button" id="todo-form-button">New Item</button>
+            <button class="red-button regular-button" id="clear-button">Clear</button>
         </header>
         <main>
             <div class="form-wrapper todo-form no-display">
@@ -60,7 +61,7 @@
                 <button type="button" form="new-todo-form" id="add-todo-button" class="regular-button">Add</button>
             </div>
             <div id="todo-list">
-                <div class="todo" data-priority="L">
+<!--                 <div class="todo" data-priority="L">
                     <button class="red-button">X</button>
                     <div class="todo-titledesc">
                         <h2>Do thing</h2>
@@ -70,40 +71,7 @@
                     <div class="todo-priority">L</div>
                     <input class="todo-done" type="checkbox">
                     <button class="todo-expand">>></button>
-                </div>
-                <div class="todo" data-priority="M">
-                    <button class="red-button">X</button>
-                    <div class="todo-titledesc">
-                        <h2>Do thing</h2>
-                        <p>stuff that will need to be done to complete the thing in question.</p>
-                    </div>
-                    <p class="todo-date">12-31-2022</p>
-                    <div class="todo-priority">M</div>
-                    <input class="todo-done" type="checkbox">
-                    <button class="todo-expand">>></button>
-                </div>
-                <div class="todo" data-priority="H">
-                    <button class="red-button">X</button>
-                    <div class="todo-titledesc">
-                        <h2>Do thing</h2>
-                        <p>stuff that will need to be done to complete the thing in question.</p>
-                    </div>
-                    <p class="todo-date">12-31-2022</p>
-                    <div class="todo-priority">H</div>
-                    <input class="todo-done" type="checkbox">
-                    <button class="todo-expand">>></button>
-                </div>
-                <div class="todo checked" data-priority="L">
-                    <button class="red-button">X</button>
-                    <div class="todo-titledesc">
-                        <h2>Do thing</h2>
-                        <p>stuff that will need to be done to complete the thing in question.</p>
-                    </div>
-                    <p class="todo-date">12-31-2022</p>
-                    <div class="todo-priority">H</div>
-                    <input class="todo-done" type="checkbox">
-                    <button class="todo-expand">>></button>
-                </div>
+                </div> -->
             </div>
         </main>
         <aside>
@@ -126,7 +94,7 @@
                         <input type="checkbox" id="edit-done">
                         <button type="button" class="red-button" id="edit-remove">X</button>
                     </div>
-                    <button type="submit" class="regular-button" id="edit-update">Update</button>
+                    <button type="button" class="regular-button" id="edit-update">Update</button>
                 </form>
             </div>
         </aside>

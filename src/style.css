@@ -98,6 +98,10 @@ nav > button {
     margin: 10px 0;
 }
 
+#clear-button {
+    margin-left: 300px;
+}
+
 .form-wrapper {
     margin: 0 0 10px 0;
 }
