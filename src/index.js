@@ -5,6 +5,11 @@ import {DisplayProjectList, DisplayTodoList} from "./display.js";
 import TodoStorage from "./todostorage.js";
 import TodoEditor from "./editor.js";
 
+import firebaseConfig from "./firebase-config";
+import {initializeApp} from "firebase/app";
+
+const todoApp = initializeApp(firebaseConfig);
+
 (function() {
     //Create project list and hook it up to display
     const projects = ProjectList();

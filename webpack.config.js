@@ -4,6 +4,9 @@ const { SingleEntryPlugin } = require("webpack");
 
 module.exports = {
     mode: "production",
+    optimization: {
+        usedExports: true
+    },
     entry: {
         index: "./src/index.js",
     },
