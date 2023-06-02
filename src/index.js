@@ -1,4 +1,3 @@
-import "./style.css";
 import {parseISO} from "date-fns";
 import {TodoItem, Project, ProjectList} from "./todos.js";
 import {DisplayProjectList, DisplayTodoList} from "./display.js";
