@@ -1,3 +1,5 @@
+import firebaseConfig from "./firebase-config";
+import {initializeApp} from "firebase/app";
 import {
   getAuth,
   GoogleAuthProvider,
@@ -5,7 +7,14 @@ import {
   signInWithPopup,
   signOut
 } from "firebase/auth";
+import {
+  getFirestore,
+  doc
+} from "firebase/firestore";
 import defaultUserPic from "./images/profile_placeholder.png";
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 class TodoApp {
   selectedProject = null;
@@ -28,7 +37,17 @@ class TodoApp {
   updateDisplay() {
     this.display.update(this);
   }
+
+  //Adding & editing project functions
+  handleStartNewProject = (event) => {
+    document.getElementById("projform-container").toggleAttribute("hidden");
+  }
+
+  handleAddProject = (event) => {
+
+  }
   
+  //Auth functions
   registerAuthState() {
     onAuthStateChanged(getAuth(), (user) => {
       if (user) {
