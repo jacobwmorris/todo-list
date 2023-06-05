@@ -12,7 +12,7 @@ class TodoApp {
   
   userLoggedIn = false;
   username = null;
-  profilePic = defaultUserPic;
+  profilePic = null;
   
   display = null;
 
@@ -34,7 +34,7 @@ class TodoApp {
       if (user) {
         this.userLoggedIn = true;
         this.username = user.displayName;
-        this.profilePic = user.photoURL;
+        this.profilePic = user.photoURL || defaultUserPic;
         this.updateDisplay();
       }
       else {
