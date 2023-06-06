@@ -3,7 +3,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { SingleEntryPlugin } = require("webpack");
 
 module.exports = {
-    mode: "production",
+    mode: "development",
+    devtool: "eval-source-map",
     optimization: {
         usedExports: true
     },
