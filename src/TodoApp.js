@@ -11,7 +11,6 @@ import {
   getFirestore,
   doc
 } from "firebase/firestore";
-import defaultUserPic from "./images/profile_placeholder.png";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -19,9 +18,7 @@ const db = getFirestore(app);
 class TodoApp {
   selectedProject = null;
   
-  userLoggedIn = false;
-  username = null;
-  profilePic = null;
+  user = null;
   
   display = null;
 
@@ -44,22 +41,21 @@ class TodoApp {
   }
 
   handleAddProject = (event) => {
-
+    event.preventDefault();
+    const projName = event.target.elements.projname.value;
+    
+    document.getElementById("projform-container").toggleAttribute("hidden", true);
   }
   
   //Auth functions
   registerAuthState() {
     onAuthStateChanged(getAuth(), (user) => {
       if (user) {
-        this.userLoggedIn = true;
-        this.username = user.displayName;
-        this.profilePic = user.photoURL || defaultUserPic;
+        this.user = user;
         this.updateDisplay();
       }
       else {
-        this.userLoggedIn = false;
-        this.username = null;
-        this.profilePic = null;
+        this.user = null;
         this.updateDisplay();
       }
     })

@@ -1,4 +1,5 @@
 import df from "./DomFuncs"
+import defaultUserPic from "./images/profile_placeholder.png";
 
 class TodoDisplay {
   projectBar = document.getElementById("project-bar");
@@ -12,11 +13,13 @@ class TodoDisplay {
     const project = df.makeElement("h1", data.selectedProject === null ? "(No project selected)" : data.selectedProject);
     this.projectBar.appendChild(project);
 
-    if (data.userLoggedIn) {
+    if (data.user !== null) {
       const icon = df.makeElement("div", "(profile pic)", "user-icon");
-      const name = df.makeElement("div", data.username);
+      const name = df.makeElement("div", data.user.username);
       const signout = df.makeElement("button", "Sign out");
-      icon.style.backgroundImage = `url(${addSizeToGoogleProfilePic(data.profilePic)})`;
+      icon.style.backgroundImage = data.user.profilePic
+        ? `url(${addSizeToGoogleProfilePic(data.user.profilePic)})`
+        : `url(${defaultUserPic})`;
       signout.addEventListener("click", data.handleSignOut);
       this.projectBar.appendChild(icon);
       this.projectBar.appendChild(name);
