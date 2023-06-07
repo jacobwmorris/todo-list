@@ -1,1 +1,77 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Todo List</title><script defer="defer" src="main.js"></script></head><body><div id="project-bar"><h1>Default project</h1><div class="user-icon"></div><div>User name</div><button>Sign out</button> <button>Sign in</button></div><div><h2>Projects</h2><button id="new-proj-button">New project</button><div id="projform-container"><form action="#" id="projform"><label for="projform-name">Title:</label> <input name="projname" id="projform-name"> <button type="submit">Add</button></form></div><ul><li id="project-list"><button class="remove-button">X</button> <button class="project-expand">Default</button></li></ul></div><div class="todo-list-area"><div><button>New item</button> <button>Clear all</button></div><ul id="todo-list"><li class="todo" data-priority="L"><button class="red-button">X</button><div class="todo-titledesc"><h2>Do thing</h2><p>stuff that will need to be done to complete the thing in question.</p></div><div class="todo-date">12-31-2022</div><div class="todo-priority">L</div><input class="todo-done" type="checkbox"> <button class="todo-expand">>></button></li></ul></div><div id="editor"><form action="#" id="addform"><label for="addform-title">Title:</label> <input name="title" id="addform-title"> <label for="addform-date">Due Date:</label> <input type="date" name="date" id="addform-date"><fieldset><legend>Priority</legend><label for="addform-lowp"><input type="radio" name="priority" value="L" id="addform-lowp">Low</label> <label for="addform-medp"><input type="radio" name="priority" value="M" id="addform-medp" checked="checked">Medium</label> <label for="addform-hip"><input type="radio" name="priority" value="H" id="addform-hip">High</label></fieldset><label for="addfrom-desc">Description:</label> <textarea name="description" id="addfrom-desc" cols="60" rows="8"></textarea> <button type="submit">Add</button></form></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+<script defer src="main.js"></script></head>
+<body>
+
+<div id="project-bar">
+  <h1>Default project</h1>
+  <div class="user-icon"></div>
+  <div>User name</div>
+  <button>Sign out</button>
+  <button>Sign in</button>
+</div>
+<div>
+  <h2>Projects</h2>
+  <button id="new-proj-button">New project</button>
+  <div id="projform-container">
+    <form action="#" id="projform">
+      <label for="projform-name">Title:</label>
+      <input type="text" name="projname" id="projform-name">
+      <button type="submit">Add</button>
+    </form>
+  </div>
+  <ul>
+    <li id="project-list">
+      <button class="remove-button">X</button>
+      <button class="project-expand">Default</button>
+    </li>
+  </ul>
+</div>
+<div class="todo-list-area">
+  <div>
+    <button>New item</button>
+    <button>Clear all</button>
+  </div>
+  <ul id="todo-list">
+    <li class="todo" data-priority="L">
+      <button class="red-button">X</button>
+      <div class="todo-titledesc">
+        <h2>Do thing</h2>
+        <p>stuff that will need to be done to complete the thing in question.</p>
+      </div>
+      <div class="todo-date">12-31-2022</div>
+      <div class="todo-priority">L</div>
+      <input class="todo-done" type="checkbox">
+      <button class="todo-expand">>></button>
+    </li>
+  </ul>
+</div>
+<div id="editor">
+  <form action="#" id="addform">
+    <label for="addform-title">Title:</label>
+    <input type="text" name="title" id="addform-title">
+    
+    <label for="addform-date">Due Date:</label>
+    <input type="date" name="date" id="addform-date">
+    
+    <fieldset>
+      <legend>Priority</legend>
+      <label for="addform-lowp"><input type="radio" name="priority" value="L" id="addform-lowp">Low</label>
+      <label for="addform-medp"><input type="radio" name="priority" value="M" id="addform-medp" checked>Medium</label>
+      <label for="addform-hip"><input type="radio" name="priority" value="H" id="addform-hip">High</label>
+    </fieldset>
+
+    <label for="addfrom-desc">Description:</label>
+    <textarea name="description" id="addfrom-desc" cols="60" rows="8"></textarea>
+        
+    <button type="submit">Add</button>
+  </form>
+</div>
+    
+</body>
+</html>

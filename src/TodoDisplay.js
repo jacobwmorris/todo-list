@@ -3,6 +3,7 @@ import defaultUserPic from "./images/profile_placeholder.png";
 
 class TodoDisplay {
   projectBar = document.getElementById("project-bar");
+  projectList = document.getElementById("project-list");
 
   update(data) {
     this.updateProjectBar(data);

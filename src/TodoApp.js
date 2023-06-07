@@ -12,7 +12,8 @@ import {
   doc,
   collection,
   getDoc,
-  getDocs
+  getDocs,
+  setDoc
 } from "firebase/firestore";
 import {Project, Todo, todoConverter} from "./Project";
 
@@ -45,7 +46,7 @@ class TodoApp {
     document.getElementById("projform-container").toggleAttribute("hidden");
   }
 
-  handleAddProject = (event) => {
+  handleAddProject = async (event) => {
     event.preventDefault();
     if (this.user === null) {
       //User not logged in
@@ -57,35 +58,57 @@ class TodoApp {
       return;
     }
 
-    const projDoc = doc(db, user.uid, projName);
+    await this.selectOrAddProject(projName);
     
     document.getElementById("projform-container").toggleAttribute("hidden", true);
+    this.updateDisplay();
+  }
+
+  async selectOrAddProject(projName) {
+    const selectResult = await this.selectProject(projName);
+
+    if (selectResult === "select project failed") {
+      return selectResult;
+    }
+    if (selectResult === "no such project") {
+      const addResult = await this.addProject(projName);
+      return addResult
+    }
+
+    return selectResult; //Existing project selected, don't do anything else
+  }
+
+  async addProject(projName) {
+    try {
+      const projRef = doc(db, this.user.uid, projName);
+      await setDoc(projRef, {});
+    }
+    catch (error) {
+      console.error("Error adding project: " + error.message);
+      return "add project failed";
+    }
+
+    return "success";
   }
 
   async selectProject(projName, useTestUser) {
-    if (this.user === null && !useTestUser) {
-      return false; //User not logged in
-    }
-    
     try {
       const projRef = doc(db, useTestUser ? "testuser" : this.user.uid, projName);
       const projSnap = await getDoc(projRef);
       if (!projSnap.exists()) {
-        return false; //The given project doesn't exist
+        return "no such project";
       }
 
       const todoList = await this.getProjectTodos(useTestUser ? "testuser" : this.user.uid, projName);
       this.selectedProject = new Project(projName, todoList);
       this.selectedTodo = null;
-      this.updateDisplay();
     }
     catch (error) {
       console.error("Error selecting project: " + error.message);
-      console.log(error);
-      return false //Promise rejected
+      return "select project failed";
     }
 
-    return true;
+    return "success";
   }
 
   async getProjectTodos(user, projName) {
