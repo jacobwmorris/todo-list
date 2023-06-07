@@ -7,6 +7,7 @@ class TodoDisplay {
 
   update(data) {
     this.updateProjectBar(data);
+    this.updateProjectList(data);
   }
 
   updateProjectBar(data) {
@@ -38,6 +39,19 @@ class TodoDisplay {
       return url + '?sz=150';
     }
     return url;
+  }
+
+  updateProjectList(data) {
+    df.clearChildren(this.projectList);
+
+    data.projectList.forEach((proj) => {
+      const li = df.makeElement("li");
+      const removeButton = df.makeElement("button", "X", "remove-button");
+      const expandButton = df.makeElement("button", proj, "project-expand");
+      li.appendChild(removeButton);
+      li.appendChild(expandButton);
+      this.projectList.appendChild(li);
+    });
   }
 }
 

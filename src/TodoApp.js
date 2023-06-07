@@ -13,7 +13,8 @@ import {
   collection,
   getDoc,
   getDocs,
-  setDoc
+  setDoc,
+  onSnapshot
 } from "firebase/firestore";
 import {Project, Todo, todoConverter} from "./Project";
 
@@ -23,6 +24,8 @@ const db = getFirestore(app);
 class TodoApp {
   selectedProject = null;
   selectedTodo = null;
+  projectList = [];
+  unsubFromProjects = null;
   
   user = null;
   
@@ -125,13 +128,31 @@ class TodoApp {
     onAuthStateChanged(getAuth(app), (user) => {
       if (user) {
         this.user = user;
+        this.setupProjectListListener();
         this.updateDisplay();
       }
       else {
         this.user = null;
+        this.unsubFromProjects();
+        this.unsubFromProjects = null;
         this.updateDisplay();
       }
     })
+  }
+
+  setupProjectListListener() {
+    const projectsRef = collection(db, this.user.uid);
+    
+    this.unsubFromProjects = onSnapshot(projectsRef, (docs) => {
+      const newProjectList = [];
+      docs.forEach((projDoc) => newProjectList.push(projDoc.id));
+      this.projectList = newProjectList;
+      console.log(this.projectList);
+      this.updateDisplay();
+    },
+    (error) => {
+      console.error("Project list listener failed: " + error.message);
+    });
   }
   
   handleSignIn = async (event) => {
