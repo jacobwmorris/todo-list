@@ -14,6 +14,7 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  deleteDoc,
   onSnapshot
 } from "firebase/firestore";
 import {Project, Todo, todoConverter} from "./Project";
@@ -52,19 +53,26 @@ class TodoApp {
   handleAddProject = async (event) => {
     event.preventDefault();
     if (this.user === null) {
-      //User not logged in
-      return;
+      return; //User not logged in
     }
     const projName = event.target.elements.projname.value;
     if (projName.length <= 0) {
-      //Project has no name
-      return;
+      return; //Project has no name
     }
 
     await this.selectOrAddProject(projName);
     
     document.getElementById("projform-container").toggleAttribute("hidden", true);
-    this.updateDisplay();
+  }
+
+  makeRemoveProjectHandler = (projName) => {
+    return (async (event) => {
+      if (this.user === null) {
+        return;
+      }
+
+      await this.removeProject(projName);
+    })
   }
 
   async selectOrAddProject(projName) {
@@ -84,11 +92,26 @@ class TodoApp {
   async addProject(projName) {
     try {
       const projRef = doc(db, this.user.uid, projName);
+      this.selectedProject = new Project(projName, []);
       await setDoc(projRef, {});
     }
     catch (error) {
       console.error("Error adding project: " + error.message);
       return "add project failed";
+    }
+
+    return "success";
+  }
+
+  async removeProject(projName) {
+    try {
+      const projRef = doc(db, this.user.uid, projName);
+      this.selectedProject = null;
+      await deleteDoc(projRef); //TODO: deleting a document doesn't delete its subcollections
+    }
+    catch (error) {
+      console.error("Error removing project: " + error.message);
+      return "remove project failed";
     }
 
     return "success";
@@ -147,7 +170,6 @@ class TodoApp {
       const newProjectList = [];
       docs.forEach((projDoc) => newProjectList.push(projDoc.id));
       this.projectList = newProjectList;
-      console.log(this.projectList);
       this.updateDisplay();
     },
     (error) => {

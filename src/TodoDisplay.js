@@ -12,7 +12,7 @@ class TodoDisplay {
 
   updateProjectBar(data) {
     df.clearChildren(this.projectBar);
-    const project = df.makeElement("h1", data.selectedProject === null ? "(No project selected)" : data.selectedProject);
+    const project = df.makeElement("h1", data.selectedProject === null ? "(No project selected)" : data.selectedProject.name);
     this.projectBar.appendChild(project);
 
     if (data.user !== null) {
@@ -48,6 +48,7 @@ class TodoDisplay {
       const li = df.makeElement("li");
       const removeButton = df.makeElement("button", "X", "remove-button");
       const expandButton = df.makeElement("button", proj, "project-expand");
+      removeButton.addEventListener("click", data.makeRemoveProjectHandler(proj));
       li.appendChild(removeButton);
       li.appendChild(expandButton);
       this.projectList.appendChild(li);
