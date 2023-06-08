@@ -27,6 +27,7 @@ class TodoApp {
   selectedTodo = null;
   projectList = [];
   unsubFromProjects = null;
+  unsubFromTodos = null;
   
   user = null;
   
@@ -42,6 +43,7 @@ class TodoApp {
   }
   
   updateDisplay() {
+    console.log("Display updated");
     this.display.update(this);
   }
 
@@ -75,6 +77,16 @@ class TodoApp {
     })
   }
 
+  makeSelectProjectHandler = (projName) => {
+    return (async (event) => {
+      if (this.user === null) {
+        return;
+      }
+
+      await this.selectProject(projName);
+    })
+  }
+
   async selectOrAddProject(projName) {
     const selectResult = await this.selectProject(projName);
 
@@ -92,8 +104,10 @@ class TodoApp {
   async addProject(projName) {
     try {
       const projRef = doc(db, this.user.uid, projName);
-      this.selectedProject = new Project(projName, []);
+      /* this.selectedProject = new Project(projName, []);
+      this.selectedTodo = null; */
       await setDoc(projRef, {});
+      await this.selectProject(projName);
     }
     catch (error) {
       console.error("Error adding project: " + error.message);
@@ -121,13 +135,14 @@ class TodoApp {
     try {
       const projRef = doc(db, useTestUser ? "testuser" : this.user.uid, projName);
       const projSnap = await getDoc(projRef);
+      
       if (!projSnap.exists()) {
         return "no such project";
       }
 
-      const todoList = await this.getProjectTodos(useTestUser ? "testuser" : this.user.uid, projName);
-      this.selectedProject = new Project(projName, todoList);
+      this.selectedProject = new Project(projName, []);
       this.selectedTodo = null;
+      this.setupTodoListener(projName);
     }
     catch (error) {
       console.error("Error selecting project: " + error.message);
@@ -145,6 +160,34 @@ class TodoApp {
     });
     return todoList;
   }
+
+  //Adding/editing todo functions
+  setupTodoListener(project) {
+    //Tear down the previous listener if there was one
+    if (this.unsubFromTodos !== null) {
+      this.unsubFromTodos();
+      this.unsubFromTodos = null;
+    }
+
+    //Make sure there is a selected project
+    if (this.selectedProject === null) {
+      return;
+    }
+
+    //Get the todos for the given project
+    const todosRef = collection(db, this.user.uid, project, "todolist").withConverter(todoConverter);
+    this.unsubFromTodos = onSnapshot(todosRef, (docs) => {
+      const newList = [];
+      docs.forEach((todoDoc) => newList.push(todoDoc.data()));
+      //Set that todo list to the selected projects list
+      this.selectedProject.todoList = newList;
+      //Update display
+      this.updateDisplay();
+    },
+    (error) => {
+      console.error("Todo list listener failed: " + error.message);
+    });
+  }
   
   //Auth functions
   registerAuthState() {
@@ -152,7 +195,6 @@ class TodoApp {
       if (user) {
         this.user = user;
         this.setupProjectListListener();
-        this.updateDisplay();
       }
       else {
         this.user = null;
