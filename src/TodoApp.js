@@ -152,15 +152,6 @@ class TodoApp {
     return "success";
   }
 
-  async getProjectTodos(user, projName) {
-    const todoSnap = await getDocs(collection(db, user, projName, "todolist").withConverter(todoConverter));
-    const todoList = [];
-    todoSnap.forEach((todoDoc) => {
-      todoList.push(todoDoc.data());
-    });
-    return todoList;
-  }
-
   //Adding/editing todo functions
   setupTodoListener(project) {
     //Tear down the previous listener if there was one
