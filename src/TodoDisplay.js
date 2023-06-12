@@ -1,4 +1,5 @@
 import df from "./DomFuncs"
+import { format, formatISO } from "date-fns";
 import defaultUserPic from "./images/profile_placeholder.png";
 
 class TodoDisplay {
@@ -96,7 +97,7 @@ class TodoDisplay {
   }
 
   makeTodoDueDate(date) {
-    return df.makeElement("div", "(due date)", "todo-date");
+    return df.makeElement("div", format(date, "dd-MM-yyyy"), "todo-date");
   }
 
   updateEditor(data) {
@@ -118,7 +119,7 @@ class TodoDisplay {
     const checked = document.getElementById("addform-checked");
     //Put selected todo info into the form controls.
     title.value = data.selectedTodo.title;
-    due.value = "2000-01-01";
+    due.value = formatISO(data.selectedTodo.due);
     priorityButtons[data.selectedTodo.priority].checked = true;
     desc.value = data.selectedTodo.desc;
     checked.checked = data.selectedTodo.checked;
@@ -146,34 +147,6 @@ class TodoDisplay {
     container.appendChild(addButton);
     container.appendChild(cancelButton);
   }
-
-  /* <div id="editor">
-  <form action="#" id="addform">
-    <label for="addform-title">Title:</label>
-    <input type="text" name="title" id="addform-title">
-    
-    <label for="addform-date">Due Date:</label>
-    <input type="date" name="date" id="addform-date">
-    
-    <fieldset>
-      <legend>Priority</legend>
-      <label for="addform-lowp"><input type="radio" name="priority" value="L" id="addform-lowp">Low</label>
-      <label for="addform-medp"><input type="radio" name="priority" value="M" id="addform-medp" checked>Medium</label>
-      <label for="addform-hip"><input type="radio" name="priority" value="H" id="addform-hip">High</label>
-    </fieldset>
-
-    <label for="addfrom-desc">Description:</label>
-    <textarea name="description" id="addfrom-desc" cols="60" rows="8"></textarea>
-    
-    <label for="checked">Complete:</label>
-    <input type="checkbox" name="checked">
-
-    <div>
-      <button type="submit">Add</button>
-      <button type="button">Cancel</button>
-    </div>
-  </form>
-</div> */
 }
 
 export default TodoDisplay;

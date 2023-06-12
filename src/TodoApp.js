@@ -1,4 +1,5 @@
 import firebaseConfig from "./firebase-config";
+import {parseISO} from "date-fns";
 import {initializeApp} from "firebase/app";
 import {
   getAuth,
@@ -170,7 +171,7 @@ class TodoApp {
       return;
     }
 
-    this.selectedTodo = new Todo("", "", "", "M", false);
+    this.selectedTodo = new Todo("", "", new Date(), "M", false);
     this.updateDisplay();
   }
 
@@ -188,7 +189,7 @@ class TodoApp {
     const form = event.target.form.elements;
     const title = form.title.value;
     const desc = form.description.value;
-    const due = form.date.value;
+    const due = parseISO(form.date.value);
     const priority = form.priority.value;
     const checked = form.checked ? true : false;
 

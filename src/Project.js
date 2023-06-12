@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 
 class Project {
   name = "default";
@@ -30,14 +31,14 @@ const todoConverter = {
     return {
       title: todo.title,
       desc: todo.desc,
-      due: todo.due,
+      due: Timestamp.fromDate(todo.due),
       priority: todo.priority,
       checked: todo.checked
     };
   },
   fromFirestore: (snapshot, options) => {
     const data = snapshot.data(options);
-    return new Todo(data.title, data.desc, data.due, data.priority, data.checked);
+    return new Todo(data.title, data.desc, data.due.toDate(), data.priority, data.checked);
   }
 }
 
