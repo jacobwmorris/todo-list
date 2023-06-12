@@ -5,11 +5,13 @@ class TodoDisplay {
   projectBar = document.getElementById("project-bar");
   projectList = document.getElementById("project-list");
   todoList = document.getElementById("todo-list");
+  editor = document.getElementById("editor");
 
   update(data) {
     this.updateProjectBar(data);
     this.updateProjectList(data);
     this.updateTodoList(data);
+    this.updateEditor(data);
   }
 
   updateProjectBar(data) {
@@ -97,19 +99,81 @@ class TodoDisplay {
     return df.makeElement("div", "(due date)", "todo-date");
   }
 
-  /* <ul id="todo-list">
-    <li class="todo" data-priority="L">
-      <button class="red-button">X</button>
-      <div class="todo-titledesc">
-        <h2>Do thing</h2>
-        <p>stuff that will need to be done to complete the thing in question.</p>
-      </div>
-      <div class="todo-date">12-31-2022</div>
-      <div class="todo-priority">L</div>
-      <input class="todo-done" type="checkbox">
-      <button class="todo-expand">>></button>
-    </li>
-  </ul> */
+  updateEditor(data) {
+    const todoSelected = data.selectedTodo !== null;
+    this.editor.toggleAttribute("hidden", !todoSelected);
+
+    if (!todoSelected) {
+      return;
+    }
+
+    const title = document.getElementById("addform-title");
+    const due = document.getElementById("addform-date");
+    const priorityButtons = {
+      L: document.getElementById("addform-lowp"),
+      M: document.getElementById("addform-medp"),
+      H: document.getElementById("addform-hip")
+    };
+    const desc = document.getElementById("addform-desc");
+    const checked = document.getElementById("addform-checked");
+    //Put selected todo info into the form controls.
+    title.value = data.selectedTodo.title;
+    due.value = "2000-01-01";
+    priorityButtons[data.selectedTodo.priority].checked = true;
+    desc.value = data.selectedTodo.desc;
+    checked.checked = data.selectedTodo.checked;
+
+    this.makeEditorButtons(data);
+  }
+
+  makeEditorButtons(data) {
+    const container = document.getElementById("editor-buttons");
+    const mode = data.selectedTodo.id ? "Edit" : "Add";
+    df.clearChildren(container);
+    
+    const addButton = df.makeElement("button", mode);
+    const cancelButton = df.makeElement("button", "Cancel");
+    if (mode === "Add") {
+      addButton.addEventListener("click", data.handleAddTodo);
+    }
+    else if (mode === "Update") {
+      addButton.addEventListener("click", (e) => console.log("Edited todo")/*placeholder*/);
+    }
+    cancelButton.addEventListener("click", data.handleCancelEdit);
+    addButton.setAttribute("type", "submit");
+    cancelButton.setAttribute("type", "button");
+    
+    container.appendChild(addButton);
+    container.appendChild(cancelButton);
+  }
+
+  /* <div id="editor">
+  <form action="#" id="addform">
+    <label for="addform-title">Title:</label>
+    <input type="text" name="title" id="addform-title">
+    
+    <label for="addform-date">Due Date:</label>
+    <input type="date" name="date" id="addform-date">
+    
+    <fieldset>
+      <legend>Priority</legend>
+      <label for="addform-lowp"><input type="radio" name="priority" value="L" id="addform-lowp">Low</label>
+      <label for="addform-medp"><input type="radio" name="priority" value="M" id="addform-medp" checked>Medium</label>
+      <label for="addform-hip"><input type="radio" name="priority" value="H" id="addform-hip">High</label>
+    </fieldset>
+
+    <label for="addfrom-desc">Description:</label>
+    <textarea name="description" id="addfrom-desc" cols="60" rows="8"></textarea>
+    
+    <label for="checked">Complete:</label>
+    <input type="checkbox" name="checked">
+
+    <div>
+      <button type="submit">Add</button>
+      <button type="button">Cancel</button>
+    </div>
+  </form>
+</div> */
 }
 
 export default TodoDisplay;

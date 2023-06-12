@@ -34,8 +34,8 @@
 </div>
 <div class="todo-list-area">
   <div>
-    <button>New item</button>
-    <button>Clear all</button>
+    <button id="new-todo-button">New item</button>
+    <button id="clear-list-button">Clear all</button>
   </div>
   <ul id="todo-list">
     <li class="todo" data-priority="L">
@@ -46,12 +46,12 @@
       </div>
       <div class="todo-date">12-31-2022</div>
       <div class="todo-priority">L</div>
-      <input class="todo-done" type="checkbox">
+      <input class="todo-done" type="checkbox" name="checked">
       <button class="todo-expand">>></button>
     </li>
   </ul>
 </div>
-<div id="editor">
+<div id="editor" hidden>
   <form action="#" id="addform">
     <label for="addform-title">Title:</label>
     <input type="text" name="title" id="addform-title">
@@ -67,9 +67,15 @@
     </fieldset>
 
     <label for="addfrom-desc">Description:</label>
-    <textarea name="description" id="addfrom-desc" cols="60" rows="8"></textarea>
-        
-    <button type="submit">Add</button>
+    <textarea name="description" id="addform-desc" cols="60" rows="8"></textarea>
+    
+    <label for="addform-checked">Complete:</label>
+    <input type="checkbox" name="checked" id="addform-checked">
+
+    <div id="editor-buttons">
+      <button type="submit">Add</button>
+      <button type="button">Cancel</button>
+    </div>
   </form>
 </div>
     
