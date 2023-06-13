@@ -77,6 +77,7 @@ class TodoDisplay {
       const checked = df.makeElement("checkbox", "", "todo-done");
       const expandButton = df.makeElement("button", ">>", "todo-expand");
       li.setAttribute("data-priority", todo.priority);
+      expandButton.addEventListener("click", data.makeStartEditTodoHandler(todo));
       li.appendChild(removeButton);
       li.appendChild(titleDesc);
       li.appendChild(dueDate);
@@ -119,7 +120,7 @@ class TodoDisplay {
     const checked = document.getElementById("addform-checked");
     //Put selected todo info into the form controls.
     title.value = data.selectedTodo.title;
-    due.value = formatISO(data.selectedTodo.due);
+    due.value = formatISO(data.selectedTodo.due, {representation: "date"});
     priorityButtons[data.selectedTodo.priority].checked = true;
     desc.value = data.selectedTodo.desc;
     checked.checked = data.selectedTodo.checked;
@@ -137,8 +138,8 @@ class TodoDisplay {
     if (mode === "Add") {
       addButton.addEventListener("click", data.handleAddTodo);
     }
-    else if (mode === "Update") {
-      addButton.addEventListener("click", (e) => console.log("Edited todo")/*placeholder*/);
+    else if (mode === "Edit") {
+      addButton.addEventListener("click", data.handleEditTodo);
     }
     cancelButton.addEventListener("click", data.handleCancelEdit);
     addButton.setAttribute("type", "submit");

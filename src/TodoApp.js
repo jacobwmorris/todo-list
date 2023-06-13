@@ -10,11 +10,13 @@ import {
 } from "firebase/auth";
 import {
   getFirestore,
+  Timestamp,
   doc,
   collection,
   getDoc,
   addDoc,
   setDoc,
+  updateDoc,
   deleteDoc,
   onSnapshot
 } from "firebase/firestore";
@@ -186,15 +188,19 @@ class TodoApp {
       return;
     }
 
-    const form = event.target.form.elements;
+    const newTodo = this.todoFromFormElements(event.target.form.elements);
+
+    this.selectedTodo = null;
+    await this.addTodo(newTodo);
+  }
+
+  todoFromFormElements(form) {
     const title = form.title.value;
     const desc = form.description.value;
     const due = parseISO(form.date.value);
     const priority = form.priority.value;
     const checked = form.checked ? true : false;
-
-    this.selectedTodo = null;
-    await this.addTodo(new Todo(title, desc, due, priority, checked));
+    return new Todo(title, desc, due, priority, checked);
   }
 
   async addTodo(todo) {
@@ -211,6 +217,65 @@ class TodoApp {
     catch (error) {
       console.error("Problem adding todo: " + error.message);
       return "add todo failed";
+    }
+  }
+
+  makeStartEditTodoHandler = (todo) => {
+    return ((event) => {
+      this.selectedTodo = todo;
+      this.updateDisplay();
+    });
+  }
+
+  handleEditTodo = async (event) => {
+    event.preventDefault();
+    const newTodo = this.todoFromFormElements(event.target.form.elements);
+    const result = await this.editTodo(newTodo);
+    
+    switch (result) {
+      case "not logged in":
+        alert("You need to log in to do that");
+        break;
+      case "no project":
+        alert("No project selected");
+        break;
+      case "no todo":
+        alert("No todo selected");
+        break;
+      case "no todo id":
+        alert("Selected todo is not in the database");
+        break;
+      case "update todo failed":
+        alert("Unable to update todo, see console for error");
+        break;
+      default:
+        this.updateDisplay();
+        break;
+    }
+  }
+
+  async editTodo(newTodo) {
+    if (this.user === null) {return "not logged in";}
+    if (this.selectedProject === null) {return "no project";}
+    if (this.selectedTodo === null) {return "no todo";}
+    if (this.selectedTodo.id === undefined) {return "no todo id";}
+
+    const todoRef = doc(db, this.user.uid, this.selectedProject.name, "todolist", this.selectedTodo.id);
+    this.selectedTodo = null;
+
+    try {
+      await updateDoc(todoRef, {
+        title: newTodo.title,
+        desc: newTodo.desc,
+        due: Timestamp.fromDate(newTodo.due),
+        priority: newTodo.priority,
+        checked: newTodo.checked
+      });
+      return "success";
+    }
+    catch (error) {
+      console.error(error.message);
+      return "update todo failed";
     }
   }
 
