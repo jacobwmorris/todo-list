@@ -279,6 +279,47 @@ class TodoApp {
     }
   }
 
+  makeDeleteTodoHandler = (todo) => {
+    return (async (event) => {
+      const result = await this.deleteTodo(todo);
+
+      switch (result) {
+        case "not logged in":
+          alert("You need to log in to do that");
+          break;
+        case "no project":
+          alert("No project selected");
+          break;
+        case "no todo id":
+          alert("Selected todo is not in the database");
+          break;
+        case "delete todo failed":
+          alert("Unable to delete todo, see console for error");
+          break;
+        default:
+          this.updateDisplay();
+          break;
+      }
+    });
+  }
+
+  async deleteTodo(todo) {
+    if (this.user === null) {return "not logged in";}
+    if (this.selectedProject === null) {return "no project";}
+    if (todo.id === undefined) {return "no todo id";}
+
+    const todoRef = doc(db, this.user.uid, this.selectedProject.name, "todolist", todo.id);
+
+    try {
+      await deleteDoc(todoRef);
+      return "success";
+    }
+    catch (error) {
+      console.error(error.message);
+      return "delete todo failed";
+    }
+  }
+
   setupTodoListener(project) {
     //Tear down the previous listener if there was one
     if (this.unsubFromTodos !== null) {

@@ -77,6 +77,7 @@ class TodoDisplay {
       const checked = df.makeElement("checkbox", "", "todo-done");
       const expandButton = df.makeElement("button", ">>", "todo-expand");
       li.setAttribute("data-priority", todo.priority);
+      removeButton.addEventListener("click", data.makeDeleteTodoHandler(todo));
       expandButton.addEventListener("click", data.makeStartEditTodoHandler(todo));
       li.appendChild(removeButton);
       li.appendChild(titleDesc);
