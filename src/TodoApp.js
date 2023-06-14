@@ -14,11 +14,13 @@ import {
   doc,
   collection,
   getDoc,
+  getDocs,
   addDoc,
   setDoc,
   updateDoc,
   deleteDoc,
-  onSnapshot
+  onSnapshot,
+  writeBatch
 } from "firebase/firestore";
 import {Project, Todo, todoConverter} from "./Project";
 
@@ -120,9 +122,10 @@ class TodoApp {
 
   async removeProject(projName) {
     try {
+      await this.clearProject(projName);
       const projRef = doc(db, this.user.uid, projName);
       this.selectedProject = null;
-      await deleteDoc(projRef); //TODO: deleting a document doesn't delete its subcollections
+      await deleteDoc(projRef);
     }
     catch (error) {
       console.error("Error removing project: " + error.message);
@@ -151,6 +154,56 @@ class TodoApp {
     }
 
     return "success";
+  }
+
+  async clearProject(projName) {
+    if (this.user === null) {return "not logged in";}
+    if (!projName) {return "no project";}
+
+    const listRef = collection(db, this.user.uid, projName, "todolist");
+    const batch = writeBatch(db);
+    this.selectedTodo = null;
+
+    try {
+      const listSnap = await getDocs(listRef);
+      listSnap.forEach((doc) => batch.delete(doc.ref));
+    }
+    catch (error) {
+      console.error(error.message);
+      return "get todo list failed";
+    }
+  
+    try {
+      await batch.commit();
+    }
+    catch (error) {
+      console.error(error.message);
+      return "delete batch failed";
+    }
+
+    return "success";
+  }
+
+  handleClearProject = async (event) => {
+    if (this.selectedProject === null) {
+      alert("No project selected");
+      return;
+    }
+
+    const result = await this.clearProject(this.selectedProject.name);
+    switch (result) {
+      case "not logged in":
+        alert("You need to log in to do that");
+        break;
+      case "get todo list failed":
+        alert("Failed to retrieve todo list");
+        break;
+      case "delete batch failed":
+        alert("Failed to delete list");
+        break;
+      default:
+        break;
+    }
   }
 
   setupProjectListListener() {

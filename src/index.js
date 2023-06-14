@@ -8,3 +8,4 @@ todoApp.registerDisplay(new TodoDisplay());
 document.getElementById("new-proj-button").addEventListener("click", todoApp.handleStartNewProject);
 document.getElementById("projform").addEventListener("submit", todoApp.handleAddProject);
 document.getElementById("new-todo-button").addEventListener("click", todoApp.handleStartNewTodo);
+document.getElementById("clear-list-button").addEventListener("click", todoApp.handleClearProject);
