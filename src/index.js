@@ -1,5 +1,6 @@
 import TodoApp from "./TodoApp"
 import TodoDisplay from "./TodoDisplay";
+import "./style.css";
 
 const todoApp = new TodoApp()
 todoApp.registerDisplay(new TodoDisplay());

@@ -61,7 +61,7 @@ button:hover {
 }
 
 /* Main layout */
-#content {
+body {
     display: grid;
     grid-template-columns: 200px 700px 400px;
     grid-template-rows: 100px 800px;
@@ -69,34 +69,49 @@ button:hover {
     background-color: var(--col-bg);
 }
 
-nav, header, aside {
+#project-bar, #project-list-area, #todo-list-area, #editor {
     background-color: var(--col-blue-1);
     padding: 10px;
     border: 2px outset var(--col-blue-3);
 }
 
-nav {
+#project-bar {
+    grid-area: 1 / 2 / 2 / 4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#project-list-area {
     grid-area: 1 / 1 / 3 / 2;
     overflow-y: auto;
 }
 
-header {
-    grid-area: 1 / 2 / 2 / 4;
-}
-
-main {
+#todo-list-area {
     grid-area: 2 / 2 / 3 / 3;
     overflow-y: auto;
 }
 
-aside {
+#editor {
     grid-area: 2 / 3 / 3 / 4;
 }
 
-/* Project list */
-nav > button {
-    margin: 10px 0;
+/* Project bar */
+#project-bar > h1 {
+    margin-right: auto;
 }
+
+.user-icon {
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+}
+
+.user-name {
+    font-size: 1.2em;
+}
+
+/* Project list */
 
 #clear-button {
     margin-left: 300px;

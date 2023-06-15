@@ -22,8 +22,8 @@ class TodoDisplay {
 
     if (data.user !== null) {
       const icon = df.makeElement("div", "(profile pic)", "user-icon");
-      const name = df.makeElement("div", data.user.username);
-      const signout = df.makeElement("button", "Sign out");
+      const name = df.makeElement("div", data.user.username, "user-name");
+      const signout = df.makeElement("button", "Sign out", "regular-button");
       icon.style.backgroundImage = data.user.photoURL
         ? `url(${this.addSizeToGoogleProfilePic(data.user.photoURL)})`
         : `url(${defaultUserPic})`;
@@ -33,7 +33,7 @@ class TodoDisplay {
       this.projectBar.appendChild(signout);
     }
     else {
-      const signin = df.makeElement("button", "Sign in");
+      const signin = df.makeElement("button", "Sign in", "regular-button");
       signin.addEventListener("click", data.handleSignIn);
       this.projectBar.appendChild(signin);
     }
