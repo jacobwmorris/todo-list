@@ -121,13 +121,11 @@ class TodoDisplay {
       H: document.getElementById("addform-hip")
     };
     const desc = document.getElementById("addform-desc");
-    //const checked = document.getElementById("addform-checked");
     //Put selected todo info into the form controls.
     title.value = data.selectedTodo.title;
     due.value = formatISO(data.selectedTodo.due, {representation: "date"});
     priorityButtons[data.selectedTodo.priority].checked = true;
     desc.value = data.selectedTodo.desc;
-    //checked.checked = data.selectedTodo.checked;
 
     this.makeEditorButtons(data);
   }
@@ -137,8 +135,8 @@ class TodoDisplay {
     const mode = data.selectedTodo.id ? "Edit" : "Add";
     df.clearChildren(container);
     
-    const addButton = df.makeElement("button", mode);
-    const cancelButton = df.makeElement("button", "Cancel");
+    const addButton = df.makeElement("button", mode, "regular-button");
+    const cancelButton = df.makeElement("button", "Cancel", "regular-button");
     const label = df.makeElement("label", "Complete:")
     const checkbox = df.makeElement("input");
     if (mode === "Add") {
@@ -157,10 +155,10 @@ class TodoDisplay {
     checkbox.setAttribute("id", "addform-checked");
     checkbox.checked = data.selectedTodo.checked;
     
+    label.appendChild(checkbox);
+    container.appendChild(label);
     container.appendChild(addButton);
     container.appendChild(cancelButton);
-    container.appendChild(label);
-    container.appendChild(checkbox);
   }
 }
 
