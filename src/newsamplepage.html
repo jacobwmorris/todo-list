@@ -18,17 +18,17 @@
 </div>
 <div id="project-list-area">
   <h2>Projects</h2>
-  <button id="new-proj-button">New project</button>
-  <div id="projform-container" hidden>
+  <button id="new-proj-button" class="regular-button">New project</button>
+  <div id="projform-container">
     <form action="#" id="projform">
       <label for="projform-name">Title:</label>
       <input type="text" name="projname" id="projform-name">
-      <button type="submit">Add</button>
+      <button type="submit" class="regular-button">Add</button>
     </form>
   </div>
   <ul id="project-list">
-    <li>
-      <button class="remove-button">X</button>
+    <li class="project">
+      <button class="red-button">X</button>
       <button class="project-expand">Default</button>
     </li>
   </ul>
@@ -52,7 +52,7 @@
     </li>
   </ul>
 </div>
-<div id="editor" hidden>
+<div id="editor">
   <form action="#" id="addform">
     <label for="addform-title">Title:</label>
     <input type="text" name="title" id="addform-title">

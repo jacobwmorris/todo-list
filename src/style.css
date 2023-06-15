@@ -1,6 +1,5 @@
 * {
     padding: 0;
-    /* border: 1px solid black; */
     margin: 0;
     box-sizing: border-box;
 }
@@ -112,33 +111,38 @@ body {
 }
 
 /* Project list */
-
-#clear-button {
-    margin-left: 300px;
+#project-list-area > h2 {
+    margin-bottom: 10px;
 }
 
-.form-wrapper {
-    margin: 0 0 10px 0;
+#new-proj-button {
+    margin-bottom: 10px;
+}
+
+#projform {
+    margin-bottom: 10px;
+}
+
+label[for="projform-name"] {
+    font-size: 1.3em;
+    margin-top: 10px;
+}
+
+#projform-name {
+    font-size: 1.2em;
+    width: 100%;
+    margin-bottom: 5px;
 }
 
 .project {
+    border: 1px solid var(--col-blue-3);
     display: flex;
     height: 40px;
     margin-bottom: 10px;
 }
 
 .project-expand {
-    padding: 0;
     font-weight: bold;
-}
-
-.project > button.red-button {
-    width: 40px;
-    font-size: 20px;
-    flex: none;
-}
-
-.project-expand {
     padding-left: 10px;
     font-size: 1.5rem;
     text-align: left;
@@ -146,6 +150,12 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     flex: 1 1 auto;
+}
+
+.project > button.red-button {
+    width: 40px;
+    font-size: 20px;
+    flex: none;
 }
 
 /* Form */

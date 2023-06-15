@@ -50,8 +50,8 @@ class TodoDisplay {
     df.clearChildren(this.projectList);
 
     data.projectList.forEach((proj) => {
-      const li = df.makeElement("li");
-      const removeButton = df.makeElement("button", "X", "remove-button");
+      const li = df.makeElement("li", "", "project");
+      const removeButton = df.makeElement("button", "X", "red-button");
       const expandButton = df.makeElement("button", proj, "project-expand");
       removeButton.addEventListener("click", data.makeRemoveProjectHandler(proj));
       expandButton.addEventListener("click", data.makeSelectProjectHandler(proj));
