@@ -69,7 +69,7 @@ class TodoDisplay {
     }
 
     data.selectedProject.todoList.forEach((todo) => {
-      const li = df.makeElement("li", "", "todo");
+      const li = df.makeElement("li", "", todo.checked ? ["todo", "checked"] : "todo");
       const removeButton = df.makeElement("button", "X", "red-button");
       const titleDesc = this.makeTodoTitleDesc(todo.title, todo.desc);
       const dueDate = this.makeTodoDueDate(todo.due);
