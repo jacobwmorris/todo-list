@@ -74,11 +74,14 @@ class TodoDisplay {
       const titleDesc = this.makeTodoTitleDesc(todo.title, todo.desc);
       const dueDate = this.makeTodoDueDate(todo.due);
       const priority = df.makeElement("div", todo.priority, "todo-priority");
-      const checked = df.makeElement("checkbox", "", "todo-done");
+      const checked = df.makeElement("input", "", "todo-done");
       const expandButton = df.makeElement("button", ">>", "todo-expand");
       li.setAttribute("data-priority", todo.priority);
+      checked.setAttribute("type", "checkbox");
       removeButton.addEventListener("click", data.makeDeleteTodoHandler(todo));
       expandButton.addEventListener("click", data.makeStartEditTodoHandler(todo));
+      checked.addEventListener("change", data.makeToggleCheckHandler(todo));
+      checked.checked = todo.checked;
       li.appendChild(removeButton);
       li.appendChild(titleDesc);
       li.appendChild(dueDate);
@@ -118,13 +121,13 @@ class TodoDisplay {
       H: document.getElementById("addform-hip")
     };
     const desc = document.getElementById("addform-desc");
-    const checked = document.getElementById("addform-checked");
+    //const checked = document.getElementById("addform-checked");
     //Put selected todo info into the form controls.
     title.value = data.selectedTodo.title;
     due.value = formatISO(data.selectedTodo.due, {representation: "date"});
     priorityButtons[data.selectedTodo.priority].checked = true;
     desc.value = data.selectedTodo.desc;
-    checked.checked = data.selectedTodo.checked;
+    //checked.checked = data.selectedTodo.checked;
 
     this.makeEditorButtons(data);
   }
@@ -136,18 +139,28 @@ class TodoDisplay {
     
     const addButton = df.makeElement("button", mode);
     const cancelButton = df.makeElement("button", "Cancel");
+    const label = df.makeElement("label", "Complete:")
+    const checkbox = df.makeElement("input");
     if (mode === "Add") {
       addButton.addEventListener("click", data.handleAddTodo);
     }
     else if (mode === "Edit") {
       addButton.addEventListener("click", data.handleEditTodo);
+      checkbox.addEventListener("change", data.makeToggleCheckHandler(data.selectedTodo));
     }
     cancelButton.addEventListener("click", data.handleCancelEdit);
     addButton.setAttribute("type", "submit");
     cancelButton.setAttribute("type", "button");
+    label.setAttribute("for", "addform-checked");
+    checkbox.setAttribute("type", "checkbox");
+    checkbox.setAttribute("name", "checked");
+    checkbox.setAttribute("id", "addform-checked");
+    checkbox.checked = data.selectedTodo.checked;
     
     container.appendChild(addButton);
     container.appendChild(cancelButton);
+    container.appendChild(label);
+    container.appendChild(checkbox);
   }
 }
 

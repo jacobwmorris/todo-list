@@ -20,7 +20,7 @@ import {
   updateDoc,
   deleteDoc,
   onSnapshot,
-  writeBatch
+  writeBatch,
 } from "firebase/firestore";
 import {Project, Todo, todoConverter} from "./Project";
 
@@ -379,6 +379,46 @@ class TodoApp {
     }
   }
 
+  makeToggleCheckHandler = (todo) => {
+    return (async (event) => {
+      const result = await this.setChecked(todo, event.target.checked);
+      switch (result) {
+        case "not logged in":
+          alert("You need to log in to do that");
+          break;
+        case "no project":
+          alert("No project selected");
+          break;
+        case "no todo id":
+        case "todo does not exist":
+          alert("Selected todo is not in the database");
+          break;
+        case "update todo failed":
+          alert("Unable to update todo, see console for error");
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
+  async setChecked(todo, val) {
+    if (this.user === null) {return "not logged in";}
+    if (this.selectedProject === null) {return "no project";}
+    if (todo.id === undefined) {return "no todo id";}
+
+    const todoRef = doc(db, this.user.uid, this.selectedProject.name, "todolist", todo.id);
+
+    try {
+      await updateDoc(todoRef, {checked: val})
+      return "success";
+    }
+    catch (error) {
+      console.error(error.message);
+      return "update todo failed";
+    }
+  }
+
   setupTodoListener(project) {
     //Tear down the previous listener if there was one
     if (this.unsubFromTodos !== null) {
@@ -402,12 +442,22 @@ class TodoApp {
       });
       //Set that todo list to the selected projects list
       this.selectedProject.todoList = newList;
+      this.syncSelectedTodo();
       //Update display
       this.updateDisplay();
     },
     (error) => {
       console.error("Todo list listener failed: " + error.message);
     });
+  }
+
+  syncSelectedTodo() {
+    if (this.selectedTodo === null || !this.selectedTodo.id) {return;}
+
+    const updatedTodo = this.selectedProject.todoList.find((todo) => todo.id === this.selectedTodo.id);
+    if (updatedTodo !== undefined) {
+      this.selectedTodo = updatedTodo;
+    }
   }
   
   //Auth functions
