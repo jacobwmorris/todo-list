@@ -255,7 +255,8 @@ class TodoApp {
     const desc = form.description.value;
     const due = parseISO(form.date.value);
     const priority = form.priority.value;
-    const checked = form.checked ? true : false;
+    console.log(form.checked);
+    const checked = form.checked.checked ? true : false;
     return new Todo(title, desc, due, priority, checked);
   }
 
