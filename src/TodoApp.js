@@ -469,8 +469,17 @@ class TodoApp {
       }
       else {
         this.user = null;
-        this.unsubFromProjects();
-        this.unsubFromProjects = null;
+        this.projectList = [];
+        this.selectedProject = null;
+        this.selectedTodo = null;
+        if (this.unsubFromProjects !== null) {
+          this.unsubFromProjects();
+          this.unsubFromProjects = null;
+        }
+        if (this.unsubFromTodos !== null) {
+          this.unsubFromTodos();
+          this.unsubFromTodos = null;
+        }
         this.updateDisplay();
       }
     })
