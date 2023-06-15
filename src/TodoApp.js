@@ -48,7 +48,6 @@ class TodoApp {
   }
   
   updateDisplay() {
-    console.log("Display updated");
     this.display.update(this);
   }
 
@@ -121,6 +120,10 @@ class TodoApp {
   }
 
   async removeProject(projName) {
+    if (this.selectedProject !== null && this.selectedProject.name === projName && this.unsubFromTodos !== null) {
+      this.unsubFromTodos()
+      this.unsubFromTodos = null;
+    }
     try {
       await this.clearProject(projName);
       const projRef = doc(db, this.user.uid, projName);
@@ -361,6 +364,9 @@ class TodoApp {
     if (this.selectedProject === null) {return "no project";}
     if (todo.id === undefined) {return "no todo id";}
 
+    if (this.selectedTodo === todo) {
+      this.selectedTodo = null;
+    }
     const todoRef = doc(db, this.user.uid, this.selectedProject.name, "todolist", todo.id);
 
     try {
