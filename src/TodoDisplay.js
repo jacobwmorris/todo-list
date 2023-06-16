@@ -21,8 +21,8 @@ class TodoDisplay {
     this.projectBar.appendChild(project);
 
     if (data.user !== null) {
-      const icon = df.makeElement("div", "(profile pic)", "user-icon");
-      const name = df.makeElement("div", data.user.username, "user-name");
+      const icon = df.makeElement("div", "", "user-icon");
+      const name = df.makeElement("div", data.user.displayName, "user-name");
       const signout = df.makeElement("button", "Sign out", "regular-button");
       icon.style.backgroundImage = data.user.photoURL
         ? `url(${this.addSizeToGoogleProfilePic(data.user.photoURL)})`

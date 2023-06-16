@@ -19,10 +19,6 @@ body {
     background-color: var(--col-bg);
 }
 
-.no-display {
-    display: none;
-}
-
 button {
     border: none;
     background-color: var(--col-blue-1);
@@ -49,20 +45,10 @@ button:hover {
     background-color: var(--col-remove-hover);
 }
 
-.list-item {
-    border: 1px solid var(--col-blue-3);
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.scroll-overflow {
-    overflow: scroll;
-}
-
 /* Main layout */
 body {
     display: grid;
-    grid-template-columns: 200px 700px 400px;
+    grid-template-columns: 250px 700px 400px;
     grid-template-rows: 100px 800px;
     gap: 10px;
     background-color: var(--col-bg);
@@ -101,6 +87,8 @@ body {
 }
 
 .user-icon {
+    background-position: center;
+    background-size: cover;
     border-radius: 100%;
     width: 60px;
     height: 60px;
