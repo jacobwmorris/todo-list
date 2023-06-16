@@ -21,6 +21,8 @@ import {
   deleteDoc,
   onSnapshot,
   writeBatch,
+  query,
+  orderBy
 } from "firebase/firestore";
 import {Project, Todo, todoConverter} from "./Project";
 
@@ -434,7 +436,8 @@ class TodoApp {
 
     //Get the todos for the given project
     const todosRef = collection(db, this.user.uid, project, "todolist").withConverter(todoConverter);
-    this.unsubFromTodos = onSnapshot(todosRef, (docs) => {
+    const todoQuery = query(todosRef, orderBy("due", "asc"));
+    this.unsubFromTodos = onSnapshot(todoQuery, (docs) => {
       const newList = [];
       docs.forEach((todoDoc) => {
         const todoObj = todoDoc.data();
